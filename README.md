@@ -53,7 +53,7 @@ I assume you are running a Windows (64-bit) system.
 	1. In the _Project Explorer_ view, right-click on the _DuplicateFilesAndFolders_ project and select _Build Path > Configure Build Path..._
 	2. Click tab _Libraries_.
 	3. Remove any JARs with an error marker.
-	4. Click the _Add External JARs..._ button and add the following libraries (`XXX` is a placeholder for a version string):
+	4. Click the _Add External JARs..._ button and add the following libraries from your Eclipse IDE's plugins folder (`XXX` is a placeholder for a version string):
 		* `org.eclipse.core.commands_XXX.jar`
 		* `org.eclipse.core.runtime_XXX.jar`
 		* `org.eclipse.equinox.common_XXX.jar`
@@ -61,7 +61,7 @@ I assume you are running a Windows (64-bit) system.
 		* `org.eclipse.swt.win32.win32.x86_64_XXX.jar`
 		* `org.eclipse.swt_XXX.jar`
 	5. Close the dialog with _OK_.
-	6. There should be no error markers anymore in the _Project Explorer_ view.
+	6. There should be no more error markers in the _Project Explorer_ view.
 5. In the _Project Explorer_ view, right-click _DuplicateFilesAndFolders_ and select _Run As > Java Application_.
 6. The DuplicateFilesAndFolders application starts. Close it.
 7. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
