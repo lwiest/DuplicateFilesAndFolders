@@ -1,8 +1,8 @@
-#DuplicateFileAndFolders
+#DuplicateFilesAndFolders
 
-DuplicateFilesAndFolders is an open-source tool to find and (optionally) delete duplicate files and folders, written in Java. It identifies duplicate files and folder by calculating and comparing MD5 hashes (something that Git does, too). For easy operation DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
+DuplicateFilesAndFolders is an open-source tool to find and (optionally) delete duplicate files and folders, written in Java. It identifies duplicate files and folders by calculating and comparing MD5 hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
 
-I developed DuplicateFilesAndFolders on Windows 7 (64-bit), but it should be easy to port it to other platforms. The DuplicateFileAndFolders source code is available under the MIT license.
+I developed DuplicateFilesAndFolders on Windows 7 (64-bit), but it should be easy to port it to other platforms. The DuplicateFilesAndFolders source code is available under the MIT license.
 
 Enjoy -- Lorenz
 
@@ -15,12 +15,11 @@ I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 
 1. Download the Zip-file from GitHub.
 2. Unzip it to a temporary folder ("temp folder").
-3. In the temp folder, locate the `DuplicateFileAndFolders.jar` file.
-4. Double-click this file to run DuplicateFileAndFolders.
+3. In the temp folder, locate the `DuplicateFilesAndFolders.jar` file.
+4. Double-click this file to run DuplicateFilesAndFolders.
 
 ## Usage
-
-![Screenshot1](etc/image1.png "Screenshot1")
+<img src="etc/image1.png" width="500"/>
 
 1. Enter or choose a folder to scan.
 2. Click _Find Duplicates_ to scan the folder.
@@ -30,22 +29,22 @@ I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 6. Select a duplicate item for deletion.
 7. Child items of selected items are automatically selected and dimmed.
 8. Open a folder (or the containing folder of a file) with the context menu.
-9. Open the deletion dialog.
+9. Open the _Confirm Deleting Items_ dialog.
 
-![Screenshot2](etc/image2.png "Screenshot2")
+<img src="etc/image2.png" width="500"/>
 
 1. Confirm to delete the selected items.
 2. Delete the selected items.
 
-:exclamation: **Important: Like with all software able to delete files you are using DuplicateFilesAndFolders at your own risk.**
+:exclamation: **Important: Like with all software able to delete files you are using DuplicateFilesAndFolders at your own risk.** :exclamation:
 
 ## Build Instructions
 
 I assume you are running a Windows (64-bit) system.
 
 **Prerequisites:**
-* You have Java SDK installed on your system (I used Java SDK 8 64-bit).
-* You have the Eclipse IDE installed on your system (I used Eclipse 4.5.0 "Mars" 64-bit).
+* You have Java SDK installed on your system (I used Java SDK 8 (64-bit)).
+* You have the Eclipse IDE installed on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
 
 1. Download the Zip-file from GitHub.
 2. Unzip it to a temporary folder ("temp folder").
@@ -54,7 +53,7 @@ I assume you are running a Windows (64-bit) system.
 	1. In the _Project Explorer_ view, right-click on the _DuplicateFilesAndFolders_ project and select _Build Path > Configure Build Path..._
 	2. Click tab _Libraries_.
 	3. Remove any JARs with an error marker.
-	4. Click the _Add External JARs..._ button and add the following libraries:
+	4. Click the _Add External JARs..._ button and add the following libraries (`XXX` is a placeholder for a version string):
 		* `org.eclipse.core.commands_XXX.jar`
 		* `org.eclipse.core.runtime_XXX.jar`
 		* `org.eclipse.equinox.common_XXX.jar`
@@ -62,9 +61,9 @@ I assume you are running a Windows (64-bit) system.
 		* `org.eclipse.swt.win32.win32.x86_64_XXX.jar`
 		* `org.eclipse.swt_XXX.jar`
 	5. Close the dialog with _OK_.
-	6. (There should be no error markers anymore in the _Project Explorer_ view.)
+	6. There should be no error markers anymore in the _Project Explorer_ view.
 5. In the _Project Explorer_ view, right-click _DuplicateFilesAndFolders_ and select _Run As > Java Application_.
-6. (The DuplicateFilesAndFolders application starts. Close it.)
+6. The DuplicateFilesAndFolders application starts. Close it.
 7. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
 8. Select _Java > Runnable JAR file_.
 9. Click _Next >_.
@@ -72,7 +71,7 @@ I assume you are running a Windows (64-bit) system.
 11. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
 12. Select the radio button _Package required libraries into generated JAR_.
 13. Click _Finish_.
-14. With a file explorer find the exported JAR-file at the export location.
+14. Use a file explorer to find the exported JAR-file.
 15. To run the exported JAR file, double-click it.
 
 ## Porting Tips
