@@ -22,7 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.lorenzwiest.duplicatefilesandfolders;
+package de.lorenzwiest.duplicatefilesandfolders;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.swt.SWT;

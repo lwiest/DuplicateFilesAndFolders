@@ -22,7 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.lorenzwiest.duplicatefilesandfolders;
+package de.lorenzwiest.duplicatefilesandfolders;
 
 import java.io.File;
 import java.io.IOException;
@@ -82,7 +82,7 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 
-import com.lorenzwiest.duplicatefilesandfolders.WrappedLabel.Type;
+import de.lorenzwiest.duplicatefilesandfolders.WrappedLabel.Type;
 
 public class DuplicateFilesAndFolders extends ApplicationWindow {
 	final public static int INDENT = 5;

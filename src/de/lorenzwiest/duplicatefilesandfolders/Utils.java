@@ -22,7 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.lorenzwiest.duplicatefilesandfolders;
+package de.lorenzwiest.duplicatefilesandfolders;
 
 import java.io.File;
 import java.math.BigInteger;
@@ -39,8 +39,8 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 
-import com.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FileTableElement;
-import com.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FolderTableElement;
+import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FileTableElement;
+import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FolderTableElement;
 
 public class Utils {
 	final private static int MINUTE = 60;

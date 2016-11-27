@@ -22,7 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.lorenzwiest.duplicatefilesandfolders;
+package de.lorenzwiest.duplicatefilesandfolders;
 
 import java.io.BufferedInputStream;
 import java.io.Closeable;

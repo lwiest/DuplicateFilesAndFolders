@@ -22,7 +22,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-package com.lorenzwiest.duplicatefilesandfolders;
+package de.lorenzwiest.duplicatefilesandfolders;
 
 import java.util.LinkedHashSet;
 import java.util.Map;
@@ -45,8 +45,8 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
-import com.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FileTableElement;
-import com.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FolderTableElement;
+import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FileTableElement;
+import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FolderTableElement;
 
 public class DeleteConfirmationDialog extends AppDialog {
 	private final static int INDENT = DuplicateFilesAndFolders.INDENT;
