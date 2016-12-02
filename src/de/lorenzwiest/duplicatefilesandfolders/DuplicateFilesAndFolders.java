@@ -243,6 +243,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		InspectionDialog dialog = new InspectionDialog(getShell(), this.txtFolderToScan.getText());
 		if (dialog.open() == Window.OK) {
 			this.rootNode = dialog.getRootNode();
+			this.mapDuplicates = dialog.getMapDuplicates();
 
 			updateUi();
 
@@ -262,7 +263,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		for (Node child : node.getChildren()) {
 			hashFoldersRecursively(child);
 
-			sortedHashes.add(child.getMd5Hash());
+			sortedHashes.add(child.getHash());
 			totalSize += child.getSize();
 
 			if (child.getFile().isFile()) {
@@ -280,8 +281,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		for (String sortedHash : sortedHashes) {
 			this.messageDigest.update(sortedHash.getBytes(Charset.defaultCharset()));
 		}
-		String md5Hash = Utils.digestToString(this.messageDigest);
-		node.setMd5Hash(md5Hash);
+		String strHash = Utils.getHash(node.getFile(), this.messageDigest);
+		node.setHash(strHash);
 	}
 
 	private void calculateTotalFilesSize() {
@@ -303,22 +304,22 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	}
 
 	private void searchDuplicatesRecursively(Node node) {
-		String md5Hash = node.getMd5Hash();
-		if (this.mapDuplicates.containsKey(md5Hash) == false) {
-			this.mapDuplicates.put(md5Hash, new ArrayList<Node>());
+		String strHash = node.getHash();
+		if (this.mapDuplicates.containsKey(strHash) == false) {
+			this.mapDuplicates.put(strHash, new ArrayList<Node>());
 		}
-		this.mapDuplicates.get(md5Hash).add(node);
+		this.mapDuplicates.get(strHash).add(node);
 		for (Node childNode : node.getChildren()) {
 			searchDuplicatesRecursively(childNode);
 		}
 	}
 
 	private void pruneNonDuplicates() {
-		String[] copyOfMd5Hashes = this.mapDuplicates.keySet().toArray(new String[0]);
-		for (String md5Hash : copyOfMd5Hashes) {
-			List<Node> duplicatesList = this.mapDuplicates.get(md5Hash);
+		String[] copyOfStrHashes = this.mapDuplicates.keySet().toArray(new String[0]);
+		for (String strHash : copyOfStrHashes) {
+			List<Node> duplicatesList = this.mapDuplicates.get(strHash);
 			if (duplicatesList.size() < 2) {
-				this.mapDuplicates.remove(md5Hash);
+				this.mapDuplicates.remove(strHash);
 			}
 		}
 	}
@@ -540,8 +541,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			forceGrayed(fElement.getNode(), isChecked);
 		}
 
-		String md5Hash = fElement.getNode().getMd5Hash();
-		List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(md5Hash);
+		String strHash = fElement.getNode().getHash();
+		List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(strHash);
 
 		boolean isWarning = true;
 		for (Node duplicateNode : duplicateNodes) {
@@ -576,8 +577,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				fElement.setGrayed(isChecked);
 				fElement.setChecked(isChecked);
 
-				String md5Hash = fElement.getNode().getMd5Hash();
-				List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(md5Hash);
+				String strHash = fElement.getNode().getHash();
+				List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(strHash);
 
 				boolean isWarning = true;
 				for (Node duplicateNode : duplicateNodes) {
@@ -604,8 +605,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			fElement.setGrayed(isChecked);
 			fElement.setChecked(isChecked);
 
-			String md5Hash = fElement.getNode().getMd5Hash();
-			List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(md5Hash);
+			String strHash = fElement.getNode().getHash();
+			List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(strHash);
 
 			boolean isWarning = true;
 			for (Node duplicateNode : duplicateNodes) {
@@ -698,8 +699,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 		fElement.setChecked(event.getChecked());
 
-		String md5Hash = fElement.getNode().getMd5Hash();
-		List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(md5Hash);
+		String strHash = fElement.getNode().getHash();
+		List<Node> duplicateNodes = DuplicateFilesAndFolders.this.mapDuplicates.get(strHash);
 
 		boolean isWarning = true;
 		for (Node duplicateNode : duplicateNodes) {

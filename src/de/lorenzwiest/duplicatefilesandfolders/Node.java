@@ -26,14 +26,15 @@ package de.lorenzwiest.duplicatefilesandfolders;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Node {
-	final public static List<Node> EMPTY = new ArrayList<Node>();
+	final public static List<Node> EMPTY = Collections.emptyList();
 
 	private File file;
 	private List<Node> children;
-	private String md5Hash;
+	private String strHash;
 	private long size;
 	private int numTotalChildren;
 
@@ -57,12 +58,12 @@ public class Node {
 		return (this.children != null) ? this.children : EMPTY;
 	}
 
-	public void setMd5Hash(String md5Hash) {
-		this.md5Hash = md5Hash;
+	public void setHash(String strHash) {
+		this.strHash = strHash;
 	}
 
-	public String getMd5Hash() {
-		return this.md5Hash;
+	public String getHash() {
+		return this.strHash;
 	}
 
 	public void setSize(long size) {

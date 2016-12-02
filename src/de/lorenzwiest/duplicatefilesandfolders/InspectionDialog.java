@@ -37,7 +37,11 @@ import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -62,6 +66,7 @@ public class InspectionDialog extends AppDialog {
 	private int numItems;
 	private Node rootNode;
 	private InspectionRunnable inspectionRunnable;
+	private Map<String, List<Node>> mapDuplicates = Collections.emptyMap();
 
 	private Composite compositeStackLayout;
 	private StackLayout stackLayout;
@@ -80,6 +85,10 @@ public class InspectionDialog extends AppDialog {
 
 	public Node getRootNode() {
 		return this.rootNode;
+	}
+
+	public Map<String, List<Node>> getMapDuplicates() {
+		return this.mapDuplicates;
 	}
 
 	@Override
@@ -236,7 +245,8 @@ public class InspectionDialog extends AppDialog {
 
 	@Override
 	public int open() {
-		this.inspectionRunnable = new InspectionRunnable(this, this.rootNode);
+		this.mapDuplicates = new HashMap<String, List<Node>>();
+		this.inspectionRunnable = new InspectionRunnable(this, this.rootNode, this.mapDuplicates);
 		new Thread(this.inspectionRunnable).start();
 		super.open();
 
@@ -347,10 +357,12 @@ class InspectionRunnable implements Runnable {
 	private MessageDigest messageDigest;
 	private boolean isStopped = false;
 	private boolean isRunning = false;
+	private Map<String, List<Node>> mapDuplicates;
 
-	public InspectionRunnable(InspectionDialog dialog, Node rootNode) {
+	public InspectionRunnable(InspectionDialog dialog, Node rootNode, Map<String, List<Node>> mapDuplicates) {
 		this.dialog = dialog;
 		this.rootNode = rootNode;
+		this.mapDuplicates = mapDuplicates;
 		try {
 			this.messageDigest = MessageDigest.getInstance("MD5");
 		} catch (NoSuchAlgorithmException e) {
@@ -471,6 +483,9 @@ class InspectionRunnable implements Runnable {
 		return node;
 	}
 
+	private Map<Long, Node> lengthMap = new HashMap<Long, Node>();
+	private Set<Long> hashedLengths = new HashSet<Long>();
+
 	private void hashFilesRecursively(final Node node) {
 		if (isStopped()) {
 			return;
@@ -485,13 +500,37 @@ class InspectionRunnable implements Runnable {
 
 		File file = node.getFile();
 		if (file.isFile()) {
-			node.setMd5Hash(hashFile(file));
+			long length = file.length();
+			if (this.lengthMap.containsKey(length) == false) {
+				this.lengthMap.put(length, node);
+
+				String strHash = Utils.getHash(file);
+				node.setHash(strHash);
+			} else {
+				if (this.hashedLengths.contains(length) == false) {
+					this.hashedLengths.add(length);
+
+					Node cachedNode = this.lengthMap.get(length);
+					hashAndPut(cachedNode);
+				}
+				hashAndPut(node);
+			}
 			return;
 		}
 
 		for (Node child : node.getChildren()) {
 			hashFilesRecursively(child);
 		}
+	}
+
+	private void hashAndPut(Node node) {
+		String strHash = hashFile(node.getFile());
+		node.setHash(strHash);
+
+		if (this.mapDuplicates.containsKey(strHash) == false) {
+			this.mapDuplicates.put(strHash, new ArrayList<Node>());
+		}
+		this.mapDuplicates.get(strHash).add(node);
 	}
 
 	private String hashFile(File file) {
@@ -521,7 +560,7 @@ class InspectionRunnable implements Runnable {
 			closeGracefully(in);
 		}
 
-		return Utils.digestToString(this.messageDigest);
+		return Utils.getHash(file, this.messageDigest);
 	}
 
 	private static void closeGracefully(Closeable closeable) {

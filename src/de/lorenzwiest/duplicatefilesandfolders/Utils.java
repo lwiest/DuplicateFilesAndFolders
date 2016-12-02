@@ -150,8 +150,24 @@ public class Utils {
 		return new Point(Math.max(widthHint, defaultSize.x), SWT.DEFAULT);
 	}
 
-	public static String digestToString(MessageDigest messageDigest) {
-		return String.format("%32s", new BigInteger(1, messageDigest.digest()).toString(16));
+	public static String getHash(File file) {
+		final String strEmptyMd5Hash = "--------------------------------";
+		return getHashInternal(file, strEmptyMd5Hash);
+	}
+
+	public static String getHash(File file, MessageDigest messageDigest) {
+		return getHashInternal(file, String.format("%032x", new BigInteger(1, messageDigest.digest())));
+	}
+
+	private static String getHashInternal(File file, String strMd5Hash) {
+		String strHash = null;
+		if (file.isFile()) {
+			strHash = String.format("%016x%s", file.length(), strMd5Hash);
+		} else {
+			final String strEmptyLength = "----------------";
+			strHash = String.format("%s%s", strEmptyLength, strMd5Hash);
+		}
+		return strHash;
 	}
 
 	public static long calcSelectedFilesSizeRecursively(Node node, Map<Node, FolderTableElement> nodeToFolderTableElement, Map<Node, FileTableElement> nodeToFileTableElement) {
