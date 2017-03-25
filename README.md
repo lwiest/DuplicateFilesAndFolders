@@ -1,4 +1,4 @@
-#DuplicateFilesAndFolders
+# DuplicateFilesAndFolders
 
 DuplicateFilesAndFolders is an open-source tool to find and (optionally) delete duplicate files and folders, written in Java. It identifies duplicate files and folders by calculating and comparing MD5 hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
 
