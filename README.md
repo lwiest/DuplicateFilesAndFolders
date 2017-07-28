@@ -14,7 +14,7 @@ Enjoy -- Lorenz
 
 * [Quick Start](https://github.com/lwiest/DuplicateFilesAndFolders#quick-start)
 * [Usage](https://github.com/lwiest/DuplicateFilesAndFolders#usage)
-* [Build Instructions](https://github.com/lwiest/DuplicateFilesAndFolders#build-instructions)
+* [Build Instructions](#build-instructions)
 * [Porting Tips](https://github.com/lwiest/DuplicateFilesAndFolders#porting-tips)
 
 ## Quick Start
