@@ -10,6 +10,13 @@ The DuplicateFilesAndFolders source code is available under the MIT license.
 
 Enjoy -- Lorenz
 
+## Table of Contents
+
+* [Quick Start](https://github.com/lwiest/DuplicateFilesAndFolders#quick-start)
+* [Usage](https://github.com/lwiest/DuplicateFilesAndFolders#usage)
+* [Build Instructions](https://github.com/lwiest/DuplicateFilesAndFolders#build-instructions)
+* [Porting Tips](https://github.com/lwiest/DuplicateFilesAndFolders#porting-tips)
+
 ## Quick Start
 
 I prepared a runnable JAR file for the Windows (64-bit) platform for you.
