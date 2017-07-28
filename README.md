@@ -12,10 +12,10 @@ Enjoy -- Lorenz
 
 ## Table of Contents
 
-* [Quick Start](https://github.com/lwiest/DuplicateFilesAndFolders#quick-start)
-* [Usage](https://github.com/lwiest/DuplicateFilesAndFolders#usage)
+* [Quick Start](#quick-start)
+* [Usage](#usage)
 * [Build Instructions](#build-instructions)
-* [Porting Tips](https://github.com/lwiest/DuplicateFilesAndFolders#porting-tips)
+* [Porting Tips](#porting-tips)
 
 ## Quick Start
 
