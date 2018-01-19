@@ -1,22 +1,32 @@
-#DuplicateFilesAndFolders
+# DuplicateFilesAndFolders
 
-DuplicateFilesAndFolders is an open-source tool to find and (optionally) delete duplicate files and folders, written in Java. It identifies duplicate files and folders by calculating and comparing MD5 hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
+DuplicateFilesAndFolders is an open-source tool to find and optionally delete duplicate files and folders, written in Java.
 
-I developed DuplicateFilesAndFolders on Windows 7 (64-bit), but it should be easy to port it to other platforms. The DuplicateFilesAndFolders source code is available under the MIT license.
+It identifies duplicate files and folders by calculating and comparing MD5 hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
+
+I developed DuplicateFilesAndFolders on Windows 7 (64-bit), but it should be easy to port it to other platforms.
+
+The DuplicateFilesAndFolders source code is available under the MIT license.
 
 Enjoy -- Lorenz
+
+## Table of Contents
+
+* [Quick Start](#quick-start)
+* [Usage](#usage)
+* [Build Instructions](#build-instructions)
+* [Porting Tips](#porting-tips)
 
 ## Quick Start
 
 I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 
 **Prerequisites:**
-* You have Java JDK or SDK installed on your system (I used Java SDK 8 64-bit).
+* You are running a Windows (64-bit) system.
+* You have a Java JDK or SDK installed on your system (I used Java SDK 8 64-bit).
 
-1. Download the Zip-file from GitHub.
-2. Unzip it to a temporary folder ("temp folder").
-3. In the temp folder, locate the `DuplicateFilesAndFolders.jar` file.
-4. Double-click this file to run DuplicateFilesAndFolders.
+1. Download the `DuplicateFilesAndFolders.jar` file from GitHub.
+2. Double-click this file to run DuplicateFilesAndFolders.
 
 ## Usage
 <img src="etc/image1.png" width="500"/>
@@ -40,15 +50,14 @@ I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 
 ## Build Instructions
 
-I assume you are running a Windows (64-bit) system.
-
 **Prerequisites:**
-* You have Java SDK installed on your system (I used Java SDK 8 (64-bit)).
-* You have the Eclipse IDE installed on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
+* You are running a Windows (64-bit) system.
+* You have a Java SDK installed on your system (I used Java SDK 8 (64-bit)).
+* You have an Eclipse IDE installed on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
 
-1. Download the Zip-file from GitHub.
+1. Download the ZIP file of this project from GitHub.
 2. Unzip it to a temporary folder ("temp folder").
-3. Import the `DuplicateFilesAndFolders` project from the temp folder in your Eclipse IDE as an import source _General > Existing Projects into Workspace_.
+3. Import the `DuplicateFilesAndFolders` project from the temp folder to your Eclipse IDE as an import source _General > Existing Projects into Workspace_.
 4. Add the required Eclipse libraries:
 	1. In the _Project Explorer_ view, right-click on the _DuplicateFilesAndFolders_ project and select _Build Path > Configure Build Path..._
 	2. Click tab _Libraries_.
@@ -71,7 +80,7 @@ I assume you are running a Windows (64-bit) system.
 11. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
 12. Select the radio button _Package required libraries into generated JAR_.
 13. Click _Finish_.
-14. Use a file explorer to find the exported JAR-file.
+14. Use a file explorer to find the exported JAR file.
 15. To run the exported JAR file, double-click it.
 
 ## Porting Tips
@@ -80,4 +89,4 @@ To port DuplicateFilesAndFolders to another platform, apply the following change
 
 1. Adjust in method `Utils.getInitialFolderToScanPath()` the string that is shown as the initial folder path.
 2. Adjust in method `Utils.getExplorerCommandLine()` the command-line string that launches the file explorer, opening a specific folder.
-3. Replace the library `org.eclipse.swt.win32.win32.x86_64_XXX.jar` with the SWT library specific to your platform (Hint: the platform name follows the pattern `org.eclipse.swt.<platform>_<version>.v<timestamp>.jar`).
+3. Replace the SWT library `org.eclipse.swt.win32.win32.x86_64_XXX.jar` with the SWT library specific to your platform (Tip: The library name follows the pattern `org.eclipse.swt.<platform>_<version>.v<timestamp>.jar`.).
