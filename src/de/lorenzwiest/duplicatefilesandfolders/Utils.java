@@ -29,6 +29,8 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.security.MessageDigest;
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
 import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
@@ -111,8 +113,8 @@ public class Utils {
 	final private static long GB = 1024L * 1024 * 1024;
 	final private static long TB = 1024L * 1024 * 1024 * 1024;
 
-	final private static DecimalFormat DECIMAL_FORMAT1 = new DecimalFormat(".0");
-	final private static DecimalFormat DECIMAL_FORMAT2 = new DecimalFormat(".00");
+	final private static DecimalFormat DECIMAL_FORMAT1 = new DecimalFormat(".0", DecimalFormatSymbols.getInstance(Locale.US));
+	final private static DecimalFormat DECIMAL_FORMAT2 = new DecimalFormat(".00", DecimalFormatSymbols.getInstance(Locale.US));
 
 	public static String formatMemorySize(long size) {
 		DECIMAL_FORMAT1.setRoundingMode(RoundingMode.DOWN);
@@ -137,6 +139,18 @@ public class Utils {
 		} else {
 			return String.format("%s TB", DECIMAL_FORMAT1.format((double) size / TB));
 		}
+	}
+
+	final private static DecimalFormat COUNT_FORMAT = new DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US));
+
+	public static String formatCount(long count) {
+		return String.format("%s", COUNT_FORMAT.format(count));
+	}
+
+	final private static DecimalFormat PERCENTAGE_FORMAT = new DecimalFormat("#.#", DecimalFormatSymbols.getInstance(Locale.US));
+
+	public static String formatPercentage(float percentage) {
+		return String.format("%s", PERCENTAGE_FORMAT.format(percentage));
 	}
 
 	public static Point getButtonSize(Button button) {

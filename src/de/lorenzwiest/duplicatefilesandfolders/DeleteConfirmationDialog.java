@@ -210,20 +210,23 @@ public class DeleteConfirmationDialog extends AppDialog {
 
 		StringBuffer sb = new StringBuffer();
 		sb.append("You are about to delete ");
-		sb.append(String.format("%,d selected %s ", numItems, (numItems == 1) ? "item" : "items"));
+		sb.append(String.format("%s selected %s ", Utils.formatCount(numItems), (numItems == 1) ? "item" : "items"));
 		sb.append("(");
 		if (numFolders == 0) {
-			sb.append(String.format("%,d %s", numFiles, (numFiles == 1) ? "file" : "files"));
+			sb.append(String.format("%s %s", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
 		} else if (numFiles == 0) {
-			sb.append(String.format("%,d %s", numFolders, (numFolders == 1) ? "folder" : "folders"));
+			sb.append(String.format("%s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders"));
 		} else {
-			sb.append(String.format("%,d %s and %,d %s", numFolders, (numFolders == 1) ? "folder" : "folders", numFiles, (numFiles == 1) ? "file" : "files"));
+			sb.append(String.format("%s %s and %s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
 		}
 		sb.append(").");
 		sb.append(CR);
 		sb.append(CR);
 		sb.append("This will recover ");
-		sb.append(String.format("%s of %s (%3.1f%%).", Utils.formatMemorySize(selectedFileSize), Utils.formatMemorySize(this.totalFilesSize), percentage));
+		String formatSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
+		String formatTotalFileSize = Utils.formatMemorySize(this.totalFilesSize);
+		String formatPercentage = Utils.formatPercentage(percentage);
+		sb.append(String.format("%s of %s (%s%%).", formatSelectedFileSize, formatTotalFileSize, formatPercentage));
 
 		return sb.toString();
 	}

@@ -805,18 +805,21 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("You have selected ");
-			sb.append(String.format("%,d %s ", numItems, (numItems == 1) ? "item" : "items"));
+			sb.append(String.format("%s %s ", Utils.formatCount(numItems), (numItems == 1) ? "item" : "items"));
 			sb.append("(");
 			if (numFolders == 0) {
-				sb.append(String.format("%,d %s", numFiles, (numFiles == 1) ? "file" : "files"));
+				sb.append(String.format("%s %s", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
 			} else if (numFiles == 0) {
-				sb.append(String.format("%,d %s", numFolders, (numFolders == 1) ? "folder" : "folders"));
+				sb.append(String.format("%s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders"));
 			} else {
-				sb.append(String.format("%,d %s and %,d %s", numFolders, (numFolders == 1) ? "folder" : "folders", numFiles, (numFiles == 1) ? "file" : "files"));
+				sb.append(String.format("%s %s and %s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
 			}
 			sb.append(") ");
 			sb.append("containing ");
-			sb.append(String.format("%s of %s (%3.1f%%).", Utils.formatMemorySize(selectedFileSize), Utils.formatMemorySize(this.totalFilesSize), percentage));
+			String formatSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
+			String formatTotalFileSize = Utils.formatMemorySize(this.totalFilesSize);
+			String formatPercentage = Utils.formatPercentage(percentage);
+			sb.append(String.format("%s of %s (%s%%).", formatSelectedFileSize, formatTotalFileSize, formatPercentage));
 			this.infoLabel.setMessage(sb.toString(), Type.INFO);
 		} else {
 			this.infoLabel.setMessage(null, null);
@@ -900,7 +903,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				case 1:
 					return Utils.formatMemorySize(fElement.getTotalSize());
 				case 2:
-					return String.format("%,d", fElement.getTotalChildrenCount());
+					return Utils.formatCount(fElement.getTotalChildrenCount());
 				case 3:
 					return fElement.getPath();
 				default:

@@ -264,7 +264,7 @@ public class InspectionDialog extends AppDialog {
 
 	protected void updateCountItems(Node item) {
 		this.numItems++;
-		String strCountedItems = String.format("%,d", this.numItems);
+		String strCountedItems = Utils.formatCount(this.numItems);
 		if (this.lblCountedItems.isDisposed() == false) {
 			this.lblCountedItems.setText(strCountedItems);
 		}
@@ -309,7 +309,7 @@ public class InspectionDialog extends AppDialog {
 			this.lblItemName.setText(strNameHashedItem);
 		}
 
-		String strRemainingItems = String.format("%,d (%s)", this.numRemainingItems, Utils.formatMemorySize(this.remainingSize));
+		String strRemainingItems = String.format("%s (%s)", Utils.formatCount(this.numRemainingItems), Utils.formatMemorySize(this.remainingSize));
 		if (this.lblRemainingItems.isDisposed() == false) {
 			this.lblRemainingItems.setText(strRemainingItems);
 		}

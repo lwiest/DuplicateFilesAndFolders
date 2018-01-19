@@ -191,7 +191,7 @@ public class DeleteDialog extends AppDialog {
 			this.lblItemName.setText(strNameOfDeletedItem);
 		}
 
-		String strRemainingItemsToDelete = String.format("%,d", this.numRemainingItemsToDelete);
+		String strRemainingItemsToDelete = Utils.formatCount(this.numRemainingItemsToDelete);
 		if (this.lblRemainingItems.isDisposed() == false) {
 			this.lblRemainingItems.setText(strRemainingItemsToDelete);
 		}
