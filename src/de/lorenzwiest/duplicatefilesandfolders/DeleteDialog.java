@@ -171,7 +171,7 @@ public class DeleteDialog extends AppDialog {
 	private long startTimerMillis;
 	private long lastTimerMillis;
 
-	void beginDeleteItems() {
+	protected void beginDeleteItems() {
 		int numItemsToDelete = this.itemsToDelete.size();
 
 		if (this.pbDeletedItems.isDisposed() == false) {
@@ -185,7 +185,7 @@ public class DeleteDialog extends AppDialog {
 		this.lastTimerMillis = this.startTimerMillis;
 	}
 
-	void updateDeleteItem(Node item) {
+	protected void updateDeleteItem(Node item) {
 		String strNameOfDeletedItem = item.getFile().getAbsolutePath();
 		if (this.lblItemName.isDisposed() == false) {
 			this.lblItemName.setText(strNameOfDeletedItem);
@@ -220,7 +220,7 @@ public class DeleteDialog extends AppDialog {
 		}
 	}
 
-	void endDeleteItems() {
+	protected void endDeleteItems() {
 		if ((this.getShell() != null) && (this.getShell().isDisposed() == false)) {
 			close();
 		}

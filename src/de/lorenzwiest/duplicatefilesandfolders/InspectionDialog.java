@@ -256,13 +256,13 @@ public class InspectionDialog extends AppDialog {
 		return this.inspectionRunnable.isStopped() ? Window.CANCEL : Window.OK;
 	}
 
-	void beginCountItems() {
+	protected void beginCountItems() {
 		if (getShell().isDisposed() == false) {
 			getShell().setText("Count Items");
 		}
 	}
 
-	void updateCountItems(Node item) {
+	protected void updateCountItems(Node item) {
 		this.numItems++;
 		String strCountedItems = String.format("%,d", this.numItems);
 		if (this.lblCountedItems.isDisposed() == false) {
@@ -270,7 +270,7 @@ public class InspectionDialog extends AppDialog {
 		}
 	}
 
-	void endCountItems() {
+	protected void endCountItems() {
 		// unused
 	}
 
@@ -279,7 +279,7 @@ public class InspectionDialog extends AppDialog {
 	private long lastTimerMillis;
 	private long remainingSize;
 
-	void beginHashItems() {
+	protected void beginHashItems() {
 		if ((getShell() != null) && (getShell().isDisposed() == false)) {
 			getShell().setText("Inspect Items");
 		}
@@ -303,7 +303,7 @@ public class InspectionDialog extends AppDialog {
 		this.remainingSize = this.inspectionRunnable.getTotalFilesSize();
 	}
 
-	void updateHashItems(Node item) {
+	protected void updateHashItems(Node item) {
 		String strNameHashedItem = item.getFile().getAbsolutePath();
 		if (this.lblItemName.isDisposed() == false) {
 			this.lblItemName.setText(strNameHashedItem);
@@ -339,7 +339,7 @@ public class InspectionDialog extends AppDialog {
 		}
 	}
 
-	void endHashItems() {
+	protected void endHashItems() {
 		if ((this.getShell() != null) && (this.getShell().isDisposed() == false)) {
 			close();
 		}
