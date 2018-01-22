@@ -136,7 +136,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("DuplicateFilesAndFolders 1.0");
+		shell.setText("Duplicate Files & Folders 1.0");
 		shell.setImage(IMG_ICON);
 	}
 
