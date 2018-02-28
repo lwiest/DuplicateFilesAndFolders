@@ -219,6 +219,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				findDuplicatesSelected();
 			}
 		});
+
+		getShell().setDefaultButton(this.btnFindDuplicates);
 	}
 
 	private void updateFindDuplicatesSelected() {
