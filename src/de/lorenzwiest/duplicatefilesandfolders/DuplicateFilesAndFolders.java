@@ -1122,7 +1122,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			try {
 				Runtime.getRuntime().exec(cmdLine);
 			} catch (IOException e) {
-				MessageDialog.openError(getShell(), "Duplicate Droid", "An input/output problem occured with \"" + this.path + "\". Anyway, it is safe to proceed.");
+				MessageDialog.openError(getShell(), "Cannot Open Folder", "An input/output problem occured when opening folder \"" + this.path + "\" in a file browser. Anyway, it is safe to proceed.");
 			}
 		}
 	}
