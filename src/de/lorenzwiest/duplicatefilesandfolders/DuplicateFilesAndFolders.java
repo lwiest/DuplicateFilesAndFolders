@@ -61,6 +61,8 @@ import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.BusyIndicator;
+import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
@@ -68,6 +70,7 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
@@ -75,12 +78,15 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TabFolder;
-import org.eclipse.swt.widgets.TabItem;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.widgets.ToolBar;
+import org.eclipse.swt.widgets.ToolItem;
 
 import de.lorenzwiest.duplicatefilesandfolders.WrappedLabel.Type;
 
@@ -103,6 +109,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	final private static Image IMG_FOLDER_WARNING_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/folder.warning_disabled.png").createImage();
 	final private static Image IMG_FILE_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/file_disabled.png").createImage();
 	final private static Image IMG_FILE_WARNING_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/file.warning_disabled.png").createImage();
+	final private static Image IMG_MENU = ImageDescriptor.createFromFile(CLAZZ, "icons/menu.png").createImage();
 
 	private MessageDigest messageDigest;
 	private Node rootNode;
@@ -116,12 +123,17 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	private Text txtFolderToScan;
 	private Button btnFindDuplicates;
 	private WrappedLabel warningLabel;
-	private TabItem tabItemFolders;
+	private CTabItem tabItemFolders;
 	private CheckboxTableViewer tbvFolders;
-	private TabItem tabItemFiles;
+	private CTabItem tabItemFiles;
 	private CheckboxTableViewer tbvFiles;
 	private WrappedLabel infoLabel;
 	private Button btnDelete;
+
+	private CTabFolder tabFolder;
+	private MenuItem itemSelectAll;
+	private MenuItem itemSelectAllButOneOfEachDuplicate;
+	private MenuItem itemDeselectAll;
 
 	public DuplicateFilesAndFolders() {
 		super(null);
@@ -136,7 +148,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Duplicate Files & Folders 1.0");
+		shell.setText("Duplicate Files & Folders 1.1");
 		shell.setImage(IMG_ICON);
 	}
 
@@ -397,8 +409,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	}
 
 	private void autoSelectTab() {
-		TabFolder tabFolder = this.tabItemFolders.getParent();
-		TabItem selectedTab = tabFolder.getSelection()[0];
+		CTabFolder tabFolder = this.tabItemFolders.getParent();
+		CTabItem selectedTab = tabFolder.getSelection();
 		if ((selectedTab == this.tabItemFolders) && (this.folderTableElements.length == 0)) {
 			if (this.fileTableElements.length > 0) {
 				tabFolder.setSelection(this.tabItemFiles);
@@ -415,7 +427,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		autoSizeViewerColumns(this.tbvFiles, this.tabItemFiles);
 	}
 
-	private void autoSizeViewerColumns(final TableViewer viewer, final TabItem tabItem) {
+	private void autoSizeViewerColumns(final TableViewer viewer, final CTabItem tabItem) {
 		Display.getDefault().asyncExec(new Runnable() {
 			@Override
 			public void run() {
@@ -430,9 +442,9 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				}
 
 				// hack to update non-visible tabs
-				TabItem[] selection = tabItem.getParent().getSelection();
-				tabItem.getParent().setSelection(tabItem);
+				CTabItem saveSelection = tabItem.getParent().getSelection();
 
+				tabItem.getParent().setSelection(tabItem);
 				int tableWidth = table.getClientArea().width;
 				int totalColumnWidth = 0;
 				for (int col = 0; col < table.getColumnCount(); col++) {
@@ -443,7 +455,9 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				int newLastColumnWidth = lastColumnWidth + (tableWidth - totalColumnWidth);
 				table.getColumn(lastColumnIndex).setWidth(newLastColumnWidth);
 
-				tabItem.getParent().setSelection(selection);
+				if (saveSelection != null) {
+					tabItem.getParent().setSelection(saveSelection);
+				}
 
 				table.setRedraw(true);
 			}
@@ -456,26 +470,152 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	}
 
 	private void createTabFolder(Composite parent) {
-		TabFolder tabFolder = new TabFolder(parent, SWT.NONE);
-		GridDataFactory.swtDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(tabFolder);
+		this.tabFolder = new CTabFolder(parent, SWT.BORDER);
+		GridDataFactory.swtDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(this.tabFolder);
 
-		this.tabItemFolders = new TabItem(tabFolder, SWT.NONE);
+		createPopUpMenu(this.tabFolder);
+
+		this.tabItemFolders = new CTabItem(this.tabFolder, SWT.NONE);
 		this.tabItemFolders.setText("Duplicate Folders");
 		this.tabItemFolders.setImage(IMG_FOLDER);
-		this.tabItemFolders.setControl(createTabItemDuplicateFoldersContent(tabFolder));
+		this.tabItemFolders.setControl(createTabItemDuplicateFoldersContent(this.tabFolder));
 
-		this.tabItemFiles = new TabItem(tabFolder, SWT.NONE);
+		this.tabItemFiles = new CTabItem(this.tabFolder, SWT.NONE);
 		this.tabItemFiles.setText("Duplicate Files");
 		this.tabItemFiles.setImage(IMG_FILE);
-		this.tabItemFiles.setControl(createTabItemDuplicateFilesContent(tabFolder));
+		this.tabItemFiles.setControl(createTabItemDuplicateFilesContent(this.tabFolder));
+	}
+
+	private void createPopUpMenu(CTabFolder tabFolder) {
+		final ToolBar toolBar = new ToolBar(tabFolder, SWT.FLAT);
+		final ToolItem toolItem = new ToolItem(toolBar, SWT.PUSH);
+		tabFolder.setTopRight(toolBar, SWT.RIGHT);
+
+		final Menu menu = new Menu(getShell(), SWT.POP_UP);
+
+		this.itemSelectAll = new MenuItem(menu, SWT.PUSH);
+		this.itemSelectAll.setText("Select All");
+		this.itemSelectAll.setEnabled(false);
+		this.itemSelectAll.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				itemSelectAllSelected();
+			}
+		});
+
+		this.itemSelectAllButOneOfEachDuplicate = new MenuItem(menu, SWT.PUSH);
+		this.itemSelectAllButOneOfEachDuplicate.setText("Select All But One of Each Duplicate");
+		this.itemSelectAllButOneOfEachDuplicate.setEnabled(false);
+		this.itemSelectAllButOneOfEachDuplicate.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				itemSelectAllButOneOfEachItemSelected();
+			}
+		});
+
+		this.itemDeselectAll = new MenuItem(menu, SWT.PUSH);
+		this.itemDeselectAll.setText("Deselect All");
+		this.itemDeselectAll.setEnabled(false);
+		this.itemDeselectAll.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				itemDeselectAllSelected();
+			}
+		});
+
+		toolItem.setImage(IMG_MENU);
+		toolItem.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				Rectangle rect = toolItem.getBounds();
+				Point point = new Point(rect.x, rect.y + rect.height);
+				point = toolBar.toDisplay(point);
+				menu.setLocation(point.x, point.y);
+				menu.setVisible(true);
+			}
+		});
+
+		tabFolder.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				updatePopUpMenu();
+			}
+		});
+
+		tabFolder.setTabHeight(Math.max(toolBar.computeSize(SWT.DEFAULT, SWT.DEFAULT).y, tabFolder.getTabHeight()));
+	}
+
+	private void itemSelectAllSelected() {
+		CTabItem selectedTab = this.tabFolder.getSelection();
+		CheckboxTableViewer tbv  = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+
+		for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+			TableElement tableElement = (TableElement) tableItem.getData();
+			CheckStateChangedEvent event = new CheckStateChangedEvent(this.tbvFiles,  tableElement,  true);
+			if (selectedTab == this.tabItemFolders) {
+				tbvFoldersCheckStateChanged(event);
+			} else {
+				tbvFilesCheckStateChanged(event);
+			}
+		}
+	}
+
+	private void itemSelectAllButOneOfEachItemSelected() {
+		CTabItem selectedTab = this.tabFolder.getSelection();
+		CheckboxTableViewer tbv  = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+
+		String strHash = "";
+		for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+			TableElement tableElement = (TableElement) tableItem.getData();
+			if (tableElement.isGrayed()) {
+				continue;
+			}
+
+			String hashToCompare = tableElement.getNode().getHash();
+			boolean isSelected = hashToCompare.equals(strHash);
+			if (isSelected == false) {
+				strHash = hashToCompare;
+			}
+
+			CheckStateChangedEvent event = new CheckStateChangedEvent(tbv, tableElement, isSelected);
+			if (selectedTab == this.tabItemFolders) {
+				tbvFoldersCheckStateChanged(event);
+			} else {
+				tbvFilesCheckStateChanged(event);
+			}
+		};
+	}
+
+	private void itemDeselectAllSelected() {
+		CTabItem selectedTab = this.tabFolder.getSelection();
+		CheckboxTableViewer tbv  = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+
+		for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+			TableElement tableElement = (TableElement) tableItem.getData();
+			CheckStateChangedEvent event = new CheckStateChangedEvent(this.tbvFiles,  tableElement,  false);
+			if (selectedTab == this.tabItemFolders) {
+				tbvFoldersCheckStateChanged(event);
+			} else {
+				tbvFilesCheckStateChanged(event);
+			}
+		}
+	}
+
+	private void updatePopUpMenu() {
+		CTabItem selectedTab = this.tabFolder.getSelection();
+		TableElement[] tableElements = (selectedTab == this.tabItemFolders) ? this.folderTableElements : this.fileTableElements;
+		boolean isEnabled = (tableElements.length > 0);
+		this.itemSelectAll.setEnabled(isEnabled);
+		this.itemSelectAllButOneOfEachDuplicate.setEnabled(isEnabled);
+		this.itemDeselectAll.setEnabled(isEnabled);
 	}
 
 	private Control createTabItemDuplicateFoldersContent(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
 		GridDataFactory.swtDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(composite);
-		GridLayoutFactory.swtDefaults().applyTo(composite);
+		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(composite);
 
-		this.tbvFolders = CheckboxTableViewer.newCheckList(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		this.tbvFolders = CheckboxTableViewer.newCheckList(composite, SWT.FULL_SELECTION);
 		GridDataFactory.swtDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(this.tbvFolders.getTable());
 		this.tbvFolders.getTable().setHeaderVisible(true);
 		this.tbvFolders.getTable().setLinesVisible(true);
@@ -504,13 +644,13 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		this.tbvFolders.setInput(this.folderTableElements);
 
 		String[] columnNames = new String[] {
-			"", "Total Size", "Items", "Folder" };
+				"", "Total Size", "Items", "Folder" };
 		int[] columnAlignments = new int[] {
-			SWT.LEFT, SWT.RIGHT, SWT.RIGHT, SWT.LEFT };
+				SWT.LEFT, SWT.RIGHT, SWT.RIGHT, SWT.LEFT };
 		int[] columnWidths = new int[] {
-			48, 100, 100, 100 };
+				48, 100, 100, 100 };
 		boolean[] isColumnResizable = new boolean[] {
-			false, true, true, true };
+				false, true, true, true };
 
 		for (int col = 0; col < columnNames.length; col++) {
 			TableColumn tableColumn = new TableColumn(this.tbvFolders.getTable(), columnAlignments[col]);
@@ -637,8 +777,9 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		Composite composite = new Composite(parent, SWT.NONE);
 		composite.setLayout(new GridLayout());
 		GridDataFactory.swtDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(composite);
+		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(composite);
 
-		this.tbvFiles = CheckboxTableViewer.newCheckList(composite, SWT.BORDER | SWT.FULL_SELECTION);
+		this.tbvFiles = CheckboxTableViewer.newCheckList(composite, SWT.FULL_SELECTION);
 		GridDataFactory.swtDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(this.tbvFiles.getTable());
 		this.tbvFiles.getTable().setHeaderVisible(true);
 		this.tbvFiles.getTable().setLinesVisible(true);
@@ -667,13 +808,13 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		this.tbvFiles.setInput(this.fileTableElements);
 
 		String[] columnNames = new String[] {
-			"", "Size", "Folder" };
+				"", "Size", "Folder" };
 		int[] columnAlignments = new int[] {
-			SWT.LEFT, SWT.RIGHT, SWT.LEFT, };
+				SWT.LEFT, SWT.RIGHT, SWT.LEFT, };
 		int[] columnWidths = new int[] {
-			48, 100, 100 };
+				48, 100, 100 };
 		boolean[] isColumnResizable = new boolean[] {
-			false, true, true };
+				false, true, true };
 
 		for (int col = 0; col < columnNames.length; col++) {
 			TableColumn tableColumn = new TableColumn(this.tbvFiles.getTable(), columnAlignments[col]);
@@ -726,6 +867,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	private void updateViewers() {
 		this.tbvFiles.setInput(this.fileTableElements);
 		this.tbvFolders.setInput(this.folderTableElements);
+		updatePopUpMenu();
 	}
 
 	private void addOpenFolderActionContextMenu(final TableViewer tbvViewer) {
@@ -772,7 +914,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 		if (isWarningDuplicateFolder || isWarningDuplicateFile) {
 			StringBuffer sb = new StringBuffer();
-			sb.append("You are about to delete all copies of ");
+			sb.append("You are about to delete all copies of at least ");
 			if (isWarningDuplicateFile && (isWarningDuplicateFolder == false)) {
 				sb.append("a file");
 			} else if ((isWarningDuplicateFile == false) && isWarningDuplicateFolder) {
