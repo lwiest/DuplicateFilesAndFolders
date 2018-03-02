@@ -911,17 +911,15 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		}
 
 		if (isWarningDuplicateFolder || isWarningDuplicateFile) {
-			StringBuffer sb = new StringBuffer();
-			sb.append("You are about to delete all copies of at least ");
+			String strMessage = null;
 			if (isWarningDuplicateFile && (isWarningDuplicateFolder == false)) {
-				sb.append("a file");
+				strMessage = "You are about to delete all copies of a file";
 			} else if ((isWarningDuplicateFile == false) && isWarningDuplicateFolder) {
-				sb.append("a folder");
+				strMessage = "You are about to delete all copies of a folder";
 			} else if (isWarningDuplicateFile && isWarningDuplicateFolder) {
-				sb.append("a folder and a file");
+				strMessage = "You are about to delete all copies of a folder and a file";
 			}
-			sb.append(".");
-			this.warningLabel.setMessage(sb.toString(), Type.WARNING);
+			this.warningLabel.setMessage(strMessage, Type.WARNING);
 		} else {
 			this.warningLabel.setMessage(null, Type.WARNING);
 		}
@@ -947,22 +945,26 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			float percentage = ((float) selectedFileSize / totalFilesSize) * 100;
 
 			StringBuffer sb = new StringBuffer();
-			sb.append("You have selected ");
-			sb.append(String.format("%s %s ", Utils.formatCount(numItems), (numItems == 1) ? "item" : "items"));
-			sb.append("(");
+			String strSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
+			String strTotalFileSize = Utils.formatMemorySize(totalFilesSize);
+			String strPercentage = Utils.formatPercentage(percentage);
+			String strItems = (numItems == 1) ? "item" : "items";
+			String strNumItems = Utils.formatCount(numItems);
 			if (numFolders == 0) {
-				sb.append(String.format("%s %s", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
+				String strFiles = (numFiles == 1) ? "file" : "files";
+				String strNumFiles = Utils.formatCount(numFiles);
+				sb.append(String.format("You have selected %s %s (%s %s) containing %s of %s (%s%%).", strNumItems, strItems, strNumFiles, strFiles, strSelectedFileSize, strTotalFileSize, strPercentage));
 			} else if (numFiles == 0) {
-				sb.append(String.format("%s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders"));
+				String strFolders = (numFolders == 1) ? "folder" : "folders";
+				String strNumFolders = Utils.formatCount(numFolders);
+				sb.append(String.format("You have selected %s %s (%s %s) containing %s of %s (%s%%).", strNumItems, strItems, strNumFolders, strFolders, strSelectedFileSize, strTotalFileSize, strPercentage));
 			} else {
-				sb.append(String.format("%s %s and %s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
+				String strFolders = (numFolders == 1) ? "folder" : "folders";
+				String strNumFolders = Utils.formatCount(numFolders);
+				String strFiles = (numFiles == 1) ? "file" : "files";
+				String strNumFiles = Utils.formatCount(numFiles);
+				sb.append(String.format("You have selected %s %s (%s %s and %s %s) containing %s of %s (%s%%).", strNumItems, strItems, strNumFolders, strFolders, strNumFiles, strFiles, strSelectedFileSize, strTotalFileSize, strPercentage));
 			}
-			sb.append(") ");
-			sb.append("containing ");
-			String formatSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
-			String formatTotalFileSize = Utils.formatMemorySize(totalFilesSize);
-			String formatPercentage = Utils.formatPercentage(percentage);
-			sb.append(String.format("%s of %s (%s%%).", formatSelectedFileSize, formatTotalFileSize, formatPercentage));
 			this.infoLabel.setMessage(sb.toString(), Type.INFO);
 		} else {
 			this.infoLabel.setMessage(null, null);

@@ -209,24 +209,29 @@ public class DeleteConfirmationDialog extends AppDialog {
 		int numItems = numFiles + numFolders;
 
 		StringBuffer sb = new StringBuffer();
-		sb.append("You are about to delete ");
-		sb.append(String.format("%s selected %s ", Utils.formatCount(numItems), (numItems == 1) ? "item" : "items"));
-		sb.append("(");
+		String strItems = (numItems == 1) ? "item" : "items";
+		String strNumItems = Utils.formatCount(numItems);
 		if (numFolders == 0) {
-			sb.append(String.format("%s %s", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
+			String strFiles = (numFiles == 1) ? "file" : "files";
+			String strNumFiles = Utils.formatCount(numFiles);
+			sb.append(String.format("You are about to delete %s selected %s (%s %s).", strNumItems, strItems, strNumFiles, strFiles));
 		} else if (numFiles == 0) {
-			sb.append(String.format("%s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders"));
+			String strFolders = (numFolders == 1) ? "folder" : "folders";
+			String strNumFolders = Utils.formatCount(numFolders);
+			sb.append(String.format("You are about to delete %s selected %s (%s %s).", strNumItems, strItems, strNumFolders, strFolders));
 		} else {
-			sb.append(String.format("%s %s and %s %s", Utils.formatCount(numFolders), (numFolders == 1) ? "folder" : "folders", Utils.formatCount(numFiles), (numFiles == 1) ? "file" : "files"));
+			String strFolders = (numFolders == 1) ? "folder" : "folders";
+			String strNumFolders = Utils.formatCount(numFolders);
+			String strFiles = (numFiles == 1) ? "file" : "files";
+			String strNumFiles = Utils.formatCount(numFiles);
+			sb.append(String.format("You are about to delete %s selected %s (%s %s and %s %s).", strNumItems, strItems, strNumFolders, strFolders, strNumFiles, strFiles));
 		}
-		sb.append(").");
 		sb.append(CR);
 		sb.append(CR);
-		sb.append("This will recover ");
-		String formatSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
-		String formatTotalFileSize = Utils.formatMemorySize(this.totalFilesSize);
-		String formatPercentage = Utils.formatPercentage(percentage);
-		sb.append(String.format("%s of %s (%s%%).", formatSelectedFileSize, formatTotalFileSize, formatPercentage));
+		String strSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
+		String strTotalFileSize = Utils.formatMemorySize(this.totalFilesSize);
+		String strPercentage = Utils.formatPercentage(percentage);
+		sb.append(String.format("This will recover %s of %s (%s%%).", strSelectedFileSize, strTotalFileSize, strPercentage));
 
 		return sb.toString();
 	}

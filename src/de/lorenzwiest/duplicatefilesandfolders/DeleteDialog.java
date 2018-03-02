@@ -186,13 +186,13 @@ public class DeleteDialog extends AppDialog {
 	}
 
 	protected void updateDeleteItem(Node item) {
-		String strNameOfDeletedItem = item.getFile().getAbsolutePath();
 		if (this.lblItemName.isDisposed() == false) {
+			String strNameOfDeletedItem = item.getFile().getAbsolutePath();
 			this.lblItemName.setText(strNameOfDeletedItem);
 		}
 
-		String strRemainingItemsToDelete = Utils.formatCount(this.numRemainingItemsToDelete);
 		if (this.lblRemainingItems.isDisposed() == false) {
+			String strRemainingItemsToDelete = Utils.formatCount(this.numRemainingItemsToDelete);
 			this.lblRemainingItems.setText(strRemainingItemsToDelete);
 		}
 		this.numRemainingItemsToDelete--;
@@ -207,11 +207,10 @@ public class DeleteDialog extends AppDialog {
 
 			long elapsedTimeMillis = currentMillis - this.startTimerMillis;
 			float remainingTimeMillis = (((float) numItemsToDelete / (numItemsToDelete - this.numRemainingItemsToDelete)) - 1) * elapsedTimeMillis;
-			String remainingTime = Utils.formatTime((int) remainingTimeMillis);
-			String strRemainingTime = String.format("About %s", remainingTime);
 
 			if (this.lblRemainingTime.isDisposed() == false) {
-				this.lblRemainingTime.setText(strRemainingTime);
+				String strRemainingTime = Utils.formatTime((int) remainingTimeMillis);
+				this.lblRemainingTime.setText(String.format("About %s", strRemainingTime));
 			}
 		}
 

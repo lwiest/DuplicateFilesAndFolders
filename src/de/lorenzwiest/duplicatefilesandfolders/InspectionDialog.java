@@ -264,8 +264,8 @@ public class InspectionDialog extends AppDialog {
 
 	protected void updateCountItems(Node item) {
 		this.numItems++;
-		String strCountedItems = Utils.formatCount(this.numItems);
 		if (this.lblCountedItems.isDisposed() == false) {
+			String strCountedItems = Utils.formatCount(this.numItems);
 			this.lblCountedItems.setText(strCountedItems);
 		}
 	}
@@ -304,14 +304,15 @@ public class InspectionDialog extends AppDialog {
 	}
 
 	protected void updateHashItems(Node item) {
-		String strNameHashedItem = item.getFile().getAbsolutePath();
 		if (this.lblItemName.isDisposed() == false) {
+			String strNameHashedItem = item.getFile().getAbsolutePath();
 			this.lblItemName.setText(strNameHashedItem);
 		}
 
-		String strRemainingItems = String.format("%s (%s)", Utils.formatCount(this.numRemainingItems), Utils.formatMemorySize(this.remainingSize));
 		if (this.lblRemainingItems.isDisposed() == false) {
-			this.lblRemainingItems.setText(strRemainingItems);
+			String strNumRemainingItems = Utils.formatCount(this.numRemainingItems);
+			String strRemainingSize = Utils.formatMemorySize(this.remainingSize);
+			this.lblRemainingItems.setText(String.format("%s (%s)", strNumRemainingItems, strRemainingSize));
 		}
 		this.numRemainingItems--;
 		if (item.getFile().isFile()) {
@@ -326,11 +327,10 @@ public class InspectionDialog extends AppDialog {
 
 			long elapsedTimeMillis = currentMillis - this.startTimerMillis;
 			float remainingTimeMillis = (((float) this.numItems / (this.numItems - this.numRemainingItems)) - 1) * elapsedTimeMillis;
-			String remainingTime = Utils.formatTime((int) remainingTimeMillis);
-			String strRemainingTime = String.format("About %s", remainingTime);
 
 			if (this.lblRemainingTime.isDisposed() == false) {
-				this.lblRemainingTime.setText(strRemainingTime);
+				String strRemainingTime = Utils.formatTime((int) remainingTimeMillis);
+				this.lblRemainingTime.setText(String.format("About %s", strRemainingTime));
 			}
 		}
 
