@@ -73,7 +73,7 @@ public class DeleteConfirmationDialog extends AppDialog {
 		this.fileTableElements = fileTableElements;
 		this.nodeToFolderTableElement = nodeToFolderTableElement;
 		this.nodeToFileTableElement = nodeToFileTableElement;
-		this.totalFilesSize = Utils.calcTotalFilesSizeRecursively(rootNode);
+		this.totalFilesSize = rootNode.getSize();
 	}
 
 	@Override
@@ -204,7 +204,7 @@ public class DeleteConfirmationDialog extends AppDialog {
 			}
 		}
 
-		long selectedFileSize = Utils.calcSelectedFilesSizeRecursively(this.rootNode, this.nodeToFolderTableElement, this.nodeToFileTableElement);
+		long selectedFileSize = Utils.calculateSelectedFilesSize(this.folderTableElements, this.fileTableElements);
 		float percentage = ((float) selectedFileSize / this.totalFilesSize) * 100;
 		int numItems = numFiles + numFolders;
 

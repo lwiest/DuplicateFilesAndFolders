@@ -118,7 +118,6 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	private FileTableElement[] fileTableElements = new FileTableElement[0];
 	private Map<Node, FolderTableElement> nodeToFolderTableElement = new HashMap<Node, FolderTableElement>();
 	private Map<Node, FileTableElement> nodeToFileTableElement = new HashMap<Node, FileTableElement>();
-	private long totalFilesSize;
 
 	private Text txtFolderToScan;
 	private Button btnFindDuplicates;
@@ -129,7 +128,6 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	private CheckboxTableViewer tbvFiles;
 	private WrappedLabel infoLabel;
 	private Button btnDelete;
-
 	private CTabFolder tabFolder;
 	private MenuItem itemSelectAll;
 	private MenuItem itemSelectAllButOneOfEachDuplicate;
@@ -299,8 +297,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		node.setHash(strHash);
 	}
 
-	private void calculateTotalFilesSize() {
-		this.totalFilesSize = Utils.calcTotalFilesSizeRecursively(this.rootNode);
+	private long getTotalFilesSize() {
+		return this.rootNode.getSize();
 	}
 
 	private void clearViewers() {
@@ -944,8 +942,9 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 		int numItems = numFiles + numFolders;
 		if (numItems > 0) {
-			long selectedFileSize = Utils.calcSelectedFilesSizeRecursively(this.rootNode, this.nodeToFolderTableElement, this.nodeToFileTableElement);
-			float percentage = ((float) selectedFileSize / this.totalFilesSize) * 100;
+			long selectedFileSize = Utils.calculateSelectedFilesSize(this.folderTableElements, this.fileTableElements);
+			long totalFilesSize = getTotalFilesSize();
+			float percentage = ((float) selectedFileSize / totalFilesSize) * 100;
 
 			StringBuffer sb = new StringBuffer();
 			sb.append("You have selected ");
@@ -961,7 +960,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			sb.append(") ");
 			sb.append("containing ");
 			String formatSelectedFileSize = Utils.formatMemorySize(selectedFileSize);
-			String formatTotalFileSize = Utils.formatMemorySize(this.totalFilesSize);
+			String formatTotalFileSize = Utils.formatMemorySize(totalFilesSize);
 			String formatPercentage = Utils.formatPercentage(percentage);
 			sb.append(String.format("%s of %s (%s%%).", formatSelectedFileSize, formatTotalFileSize, formatPercentage));
 			this.infoLabel.setMessage(sb.toString(), Type.INFO);
@@ -1013,7 +1012,6 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			@Override
 			public void run() {
 				hashFoldersRecursively(DuplicateFilesAndFolders.this.rootNode);
-				calculateTotalFilesSize();
 				clearViewers();
 				searchDuplicates(DuplicateFilesAndFolders.this.rootNode);
 				populateViewers();
@@ -1097,7 +1095,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	//////////////////////////////////////////////////////////////////////////////
 
-	private static class TableElement {
+	protected static class TableElement {
 		protected Node node;
 		private int duplicatesGroupIndex;
 		private boolean isChecked;

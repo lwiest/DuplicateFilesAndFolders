@@ -31,7 +31,6 @@ import java.security.MessageDigest;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.Locale;
-import java.util.Map;
 
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
@@ -41,8 +40,7 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
 
-import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FileTableElement;
-import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FolderTableElement;
+import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.TableElement;
 
 public class Utils {
 	final private static int MINUTE = 60;
@@ -184,40 +182,27 @@ public class Utils {
 		return strHash;
 	}
 
-	public static long calcSelectedFilesSizeRecursively(Node node, Map<Node, FolderTableElement> nodeToFolderTableElement, Map<Node, FileTableElement> nodeToFileTableElement) {
-		if (node.getFile().isFile()) {
-			if (nodeToFileTableElement.containsKey(node)) {
-				if (nodeToFileTableElement.get(node).isChecked()) {
-					return node.getSize();
-				}
-			}
-			return 0;
-		}
-
-		if (nodeToFolderTableElement.containsKey(node)) {
-			if (nodeToFolderTableElement.get(node).isChecked()) {
-				return node.getSize();
-			}
-		}
-
+	public static long calculateSelectedFilesSize(TableElement[] folderTableElements, TableElement[] fileTableElements) {
 		long size = 0;
-		for (Node childNode : node.getChildren()) {
-			size += Utils.calcSelectedFilesSizeRecursively(childNode, nodeToFolderTableElement, nodeToFileTableElement);
+
+		for (TableElement tableElement : folderTableElements) {
+			if (tableElement.isGrayed()) {
+				continue;
+			}
+			if (tableElement.isChecked()) {
+				size += tableElement.getNode().getSize();
+			}
+		}
+
+		for (TableElement tableElement : fileTableElements) {
+			if (tableElement.isGrayed()) {
+				continue;
+			}
+			if (tableElement.isChecked()) {
+				size += tableElement.getNode().getSize();
+			}
 		}
 		return size;
-	}
-
-	public static long calcTotalFilesSizeRecursively(Node node) {
-		if (node.getFile().isFile()) {
-			return node.getSize();
-		}
-
-		long totalFileSize = 0;
-		for (Node childNode : node.getChildren()) {
-			totalFileSize += calcTotalFilesSizeRecursively(childNode);
-		}
-
-		return totalFileSize;
 	}
 
 	public static String getInitialFolderToScanPath() {
