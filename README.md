@@ -1,6 +1,6 @@
 # DuplicateFilesAndFolders
 
-DuplicateFilesAndFolders is an open-source tool to find and optionally delete duplicate files and folders, written in Java.
+DuplicateFilesAndFolders is an open-source tool to find and (optionally) delete duplicate files and folders, written in Java.
 
 It identifies duplicate files and folders by calculating and comparing MD5 hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
 
@@ -29,7 +29,7 @@ I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 2. Double-click this file to run DuplicateFilesAndFolders.
 
 ## Usage
-<img src="etc/image1.png" width="500"/>
+<img src="etc/image1.png" width="660"/>
 
 1. Enter or choose a folder to scan.
 2. Click _Find Duplicates_ to scan the folder.
@@ -38,10 +38,11 @@ I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 5. Duplicate items are grouped by background color.
 6. Select a duplicate item for deletion.
 7. Child items of selected items are automatically selected and dimmed.
-8. Open a folder (or the containing folder of a file) with the context menu.
-9. Open the _Confirm Deleting Items_ dialog.
+8. Select all items, select all but one item of each duplicate item, or deselect all items.
+9. Open a folder (or the containing folder of a file) with the context menu.
+10. Open the _Confirm Deleting Items_ dialog.
 
-<img src="etc/image2.png" width="500"/>
+<img src="etc/image2.png" width="660"/>
 
 1. Confirm to delete the selected items.
 2. Delete the selected items.
