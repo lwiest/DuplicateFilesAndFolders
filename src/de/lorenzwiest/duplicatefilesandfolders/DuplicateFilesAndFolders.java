@@ -913,11 +913,11 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		if (isWarningDuplicateFolder || isWarningDuplicateFile) {
 			String strMessage = null;
 			if (isWarningDuplicateFile && (isWarningDuplicateFolder == false)) {
-				strMessage = "You are about to delete all copies of a file";
+				strMessage = "You are about to delete all copies of at least a file";
 			} else if ((isWarningDuplicateFile == false) && isWarningDuplicateFolder) {
-				strMessage = "You are about to delete all copies of a folder";
+				strMessage = "You are about to delete all copies of at least a folder";
 			} else if (isWarningDuplicateFile && isWarningDuplicateFolder) {
-				strMessage = "You are about to delete all copies of a folder and a file";
+				strMessage = "You are about to delete all copies of at least a folder and a file";
 			}
 			this.warningLabel.setMessage(strMessage, Type.WARNING);
 		} else {

@@ -145,7 +145,7 @@ public class Utils {
 		return String.format("%s", COUNT_FORMAT.format(count));
 	}
 
-	final private static DecimalFormat PERCENTAGE_FORMAT = new DecimalFormat("#.#", DecimalFormatSymbols.getInstance(Locale.US));
+	final private static DecimalFormat PERCENTAGE_FORMAT = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.US));
 
 	public static String formatPercentage(float percentage) {
 		return String.format("%s", PERCENTAGE_FORMAT.format(percentage));
