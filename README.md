@@ -38,8 +38,8 @@ I prepared a runnable JAR file for the Windows (64-bit) platform for you.
 5. Duplicate items are grouped by background color.
 6. Select a duplicate item for deletion.
 7. Child items of selected items are automatically selected and dimmed.
-8. Select all items, select all but one item of each duplicate item, or deselect all items.
-9. Open a folder (or the containing folder of a file) with the context menu.
+8. (Optional) Select all items, select all but one item of each duplicate item, or deselect all items for deletion.
+9. (Optional) Open a folder (or the containing folder of a file) with the context menu.
 10. Open the _Confirm Deleting Items_ dialog.
 
 <img src="etc/image2.png" width="660"/>

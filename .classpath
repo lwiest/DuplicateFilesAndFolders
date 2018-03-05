@@ -4,8 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.core.commands_3.7.0.v20150422-0725.jar"/>
 	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.core.runtime_3.11.0.v20150405-1723.jar"/>
-	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.jface_3.11.0.v20150602-1400.jar" sourcepath="C:/java/eclipse450_64_jee/plugins/org.eclipse.jface.source_3.11.0.v20150602-1400.jar"/>
-	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.swt.win32.win32.x86_64_3.104.0.v20150528-0211.jar" sourcepath="C:/java/eclipse450_64_jee/plugins/org.eclipse.swt.win32.win32.x86_64.source_3.104.0.v20150528-0211.jar"/>
+	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.jface_3.11.0.v20150602-1400.jar" sourcepath="C:/java/eclipse450_64_jee/plugins/org.eclipse.jface.source_3.11.1.v20160128-1644.jar"/>
+	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.swt.win32.win32.x86_64_3.104.0.v20150528-0211.jar" sourcepath="C:/java/eclipse450_64_jee/plugins/org.eclipse.swt.win32.win32.x86_64.source_3.104.2.v20160212-1350.jar"/>
 	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.swt_3.104.0.v20150528-0211.jar"/>
 	<classpathentry kind="lib" path="C:/java/eclipse450_64_jee/plugins/org.eclipse.equinox.common_3.7.0.v20150402-1709.jar"/>
 	<classpathentry kind="output" path="bin"/>
