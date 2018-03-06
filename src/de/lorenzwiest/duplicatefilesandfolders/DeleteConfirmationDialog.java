@@ -31,6 +31,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.BusyIndicator;
 import org.eclipse.swt.custom.ScrolledComposite;
 import org.eclipse.swt.custom.StyledText;
 import org.eclipse.swt.events.ControlAdapter;
@@ -283,13 +284,20 @@ public class DeleteConfirmationDialog extends AppDialog {
 		DeleteDialog dialog = new DeleteDialog(this.getShell(), this.rootNode, this.itemsToDelete);
 		dialog.open();
 
-		LinkedHashSet<Node> itemsNotDeleted = dialog.getItemsNotDeleted();
+		final LinkedHashSet<Node> itemsNotDeleted = dialog.getItemsNotDeleted();
 		if (itemsNotDeleted.size() > 0) {
 			new NotDeletedItemsDialog(this.getShell(), itemsNotDeleted).open();
 		}
 
-		this.itemsToDelete.removeAll(itemsNotDeleted);
-		removeDeletedChildNodesRecursively(this.rootNode, this.itemsToDelete);
+		final Node rootNode = this.rootNode;
+		final LinkedHashSet<Node> itemsToDelete = this.itemsToDelete;
+		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
+			@Override
+			public void run() {
+				itemsToDelete.removeAll(itemsNotDeleted);
+				removeDeletedChildNodesRecursively(rootNode, itemsToDelete);
+			}
+		});
 
 		this.isCancelled = false;
 	}

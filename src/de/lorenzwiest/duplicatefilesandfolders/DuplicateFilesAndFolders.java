@@ -544,59 +544,77 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	}
 
 	private void itemSelectAllSelected() {
-		CTabItem selectedTab = this.tabFolder.getSelection();
-		CheckboxTableViewer tbv  = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+		final CTabItem selectedTab = this.tabFolder.getSelection();
+		final CTabItem tabItemFolders = this.tabItemFolders;
+		final CheckboxTableViewer tbv = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
 
-		for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
-			TableElement tableElement = (TableElement) tableItem.getData();
-			CheckStateChangedEvent event = new CheckStateChangedEvent(this.tbvFiles,  tableElement,  true);
-			if (selectedTab == this.tabItemFolders) {
-				tbvFoldersCheckStateChanged(event);
-			} else {
-				tbvFilesCheckStateChanged(event);
+		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
+			@Override
+			public void run() {
+				for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+					TableElement tableElement = (TableElement) tableItem.getData();
+					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv,  tableElement,  true);
+					if (selectedTab == tabItemFolders) {
+						tbvFoldersCheckStateChanged(event);
+					} else {
+						tbvFilesCheckStateChanged(event);
+					}
+				}
 			}
-		}
+		});
 	}
 
 	private void itemSelectAllButOneOfEachItemSelected() {
-		CTabItem selectedTab = this.tabFolder.getSelection();
-		CheckboxTableViewer tbv  = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+		final CTabItem selectedTab = this.tabFolder.getSelection();
+		final CTabItem tabItemFolders = this.tabItemFolders;
+		final CheckboxTableViewer tbv = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
 
-		String strHash = "";
-		for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
-			TableElement tableElement = (TableElement) tableItem.getData();
-			if (tableElement.isGrayed()) {
-				continue;
-			}
+		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
+			@Override
+			public void run() {
+				String strHash = "";
+				for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+					TableElement tableElement = (TableElement) tableItem.getData();
+					if (tableElement.isGrayed()) {
+						continue;
+					}
 
-			String hashToCompare = tableElement.getNode().getHash();
-			boolean isSelected = hashToCompare.equals(strHash);
-			if (isSelected == false) {
-				strHash = hashToCompare;
-			}
+					String hashToCompare = tableElement.getNode().getHash();
+					boolean isSelected = hashToCompare.equals(strHash);
+					if (isSelected == false) {
+						strHash = hashToCompare;
+					}
 
-			CheckStateChangedEvent event = new CheckStateChangedEvent(tbv, tableElement, isSelected);
-			if (selectedTab == this.tabItemFolders) {
-				tbvFoldersCheckStateChanged(event);
-			} else {
-				tbvFilesCheckStateChanged(event);
+					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv, tableElement, isSelected);
+					if (selectedTab == tabItemFolders) {
+						tbvFoldersCheckStateChanged(event);
+					} else {
+						tbvFilesCheckStateChanged(event);
+					}
+				}
 			}
-		};
+		});
 	}
 
 	private void itemDeselectAllSelected() {
-		CTabItem selectedTab = this.tabFolder.getSelection();
-		CheckboxTableViewer tbv  = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+		final CTabItem selectedTab = this.tabFolder.getSelection();
+		final CTabItem tabItemFolders = this.tabItemFolders;
+		final CheckboxTableViewer tbv = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
 
-		for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
-			TableElement tableElement = (TableElement) tableItem.getData();
-			CheckStateChangedEvent event = new CheckStateChangedEvent(this.tbvFiles,  tableElement,  false);
-			if (selectedTab == this.tabItemFolders) {
-				tbvFoldersCheckStateChanged(event);
-			} else {
-				tbvFilesCheckStateChanged(event);
+		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
+			@Override
+			public void run() {
+				for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+					TableElement tableElement = (TableElement) tableItem.getData();
+					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv,  tableElement,  false);
+					if (selectedTab == tabItemFolders) {
+						tbvFoldersCheckStateChanged(event);
+					} else {
+						tbvFilesCheckStateChanged(event);
+					}
+				}
 			}
-		}
+		});
 	}
 
 	private void updatePopUpMenu() {
