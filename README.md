@@ -19,13 +19,14 @@ Enjoy -- Lorenz
 
 ## Quick Start
 
-I prepared a runnable JAR file for the Windows (64-bit) platform for you.
+I have prepared a runnable JAR file for the Windows (64-bit) platform for you.
 
 **Prerequisites:**
 * You are running a Windows (64-bit) system.
-* You have a Java JDK or SDK installed on your system (I used Java SDK 8 64-bit).
+* You have a Java JDK or SDK installed on your system (I used Java SDK 7 64-bit).
 
-1. Download the `DuplicateFilesAndFolders.jar` file from GitHub.
+1. Download this project's ZIP file from GitHub.
+2. Extract the file `DuplicateFilesAndFolders.jar` from the ZIP file.
 2. Double-click this file to run DuplicateFilesAndFolders.
 
 ## Usage
