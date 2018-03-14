@@ -418,6 +418,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				tabFolder.setSelection(this.tabItemFolders);
 			}
 		}
+		updatePopUpMenu();
 	}
 
 	private void autoSizeViewerColumns() {
