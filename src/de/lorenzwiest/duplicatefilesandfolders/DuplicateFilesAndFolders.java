@@ -44,19 +44,21 @@ import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
+import org.eclipse.jface.viewers.ColumnLabelProvider;
+import org.eclipse.jface.viewers.ColumnPixelData;
+import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.ICheckStateListener;
 import org.eclipse.jface.viewers.ICheckStateProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.viewers.ITableColorProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
+import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
+import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
@@ -71,7 +73,6 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -146,7 +147,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Duplicate Files & Folders 1.1");
+		shell.setText("Duplicate Files & Folders 1.2");
 		shell.setImage(IMG_ICON);
 	}
 
@@ -433,7 +434,8 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 				Table table = viewer.getTable();
 				table.setRedraw(false);
 
-				for (int col = 0; col < table.getColumnCount(); col++) {
+				// don't resize last column, it will flex as needed
+				for (int col = 0; col < (table.getColumnCount() - 1); col++) {
 					TableColumn tableColumn = table.getColumn(col);
 					if (tableColumn.getResizable()) {
 						tableColumn.pack();
@@ -442,18 +444,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 				// hack to update non-visible tabs
 				CTabItem saveSelection = tabItem.getParent().getSelection();
-
 				tabItem.getParent().setSelection(tabItem);
-				int tableWidth = table.getClientArea().width;
-				int totalColumnWidth = 0;
-				for (int col = 0; col < table.getColumnCount(); col++) {
-					totalColumnWidth += table.getColumn(col).getWidth();
-				}
-				int lastColumnIndex = table.getColumnCount() - 1;
-				int lastColumnWidth = table.getColumn(lastColumnIndex).getWidth();
-				int newLastColumnWidth = lastColumnWidth + (tableWidth - totalColumnWidth);
-				table.getColumn(lastColumnIndex).setWidth(newLastColumnWidth);
-
 				if (saveSelection != null) {
 					tabItem.getParent().setSelection(saveSelection);
 				}
@@ -554,7 +545,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			public void run() {
 				for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
 					TableElement tableElement = (TableElement) tableItem.getData();
-					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv,  tableElement,  true);
+					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv, tableElement, true);
 					if (selectedTab == tabItemFolders) {
 						tbvFoldersCheckStateChanged(event);
 					} else {
@@ -607,7 +598,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			public void run() {
 				for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
 					TableElement tableElement = (TableElement) tableItem.getData();
-					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv,  tableElement,  false);
+					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv, tableElement, false);
 					if (selectedTab == tabItemFolders) {
 						tbvFoldersCheckStateChanged(event);
 					} else {
@@ -629,8 +620,9 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	private Control createTabItemDuplicateFoldersContent(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
+		TableColumnLayout tableColumnLayout = new TableColumnLayout();
+		composite.setLayout(tableColumnLayout);
 		GridDataFactory.swtDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(composite);
-		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(composite);
 
 		this.tbvFolders = CheckboxTableViewer.newCheckList(composite, SWT.FULL_SELECTION);
 		GridDataFactory.swtDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(this.tbvFolders.getTable());
@@ -654,29 +646,41 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			}
 		});
 
-		this.tbvFolders.setLabelProvider(new FolderTableLabelProvider());
 		this.tbvFolders.setContentProvider(new ArrayContentProvider());
-		this.tbvFolders.setSorter(new FolderTableViewerSorter());
+		this.tbvFolders.setComparator(new FolderTableViewerComparator());
 		this.tbvFolders.setUseHashlookup(true);
 		this.tbvFolders.setInput(this.folderTableElements);
 
-		String[] columnNames = new String[] {
-				"", "Total Size", "Items", "Folder" };
-		int[] columnAlignments = new int[] {
-				SWT.LEFT, SWT.RIGHT, SWT.RIGHT, SWT.LEFT };
-		int[] columnWidths = new int[] {
-				48, 100, 100, 100 };
-		boolean[] isColumnResizable = new boolean[] {
-				false, true, true, true };
+		Table table = this.tbvFolders.getTable();
+		TableColumn tc0 = new TableColumn(table, SWT.LEFT);
+		tc0.setText("");
+		tableColumnLayout.setColumnData(tc0, new ColumnPixelData(48));
+		tc0.setResizable(false);
+		TableViewerColumn tbvColumn0 = new TableViewerColumn(this.tbvFolders, tc0);
+		tbvColumn0.setLabelProvider(new FolderTableLabelProvider(0));
 
-		for (int col = 0; col < columnNames.length; col++) {
-			TableColumn tableColumn = new TableColumn(this.tbvFolders.getTable(), columnAlignments[col]);
-			tableColumn.setText(columnNames[col]);
-			tableColumn.setResizable(isColumnResizable[col]);
-			tableColumn.setWidth(columnWidths[col]);
-		}
+		TableColumn tc1 = new TableColumn(table, SWT.RIGHT);
+		tc1.setText("Total Size");
+		tableColumnLayout.setColumnData(tc1, new ColumnPixelData(10));
+		tc1.setResizable(true);
+		TableViewerColumn tbvColumn1 = new TableViewerColumn(this.tbvFolders, tc1);
+		tbvColumn1.setLabelProvider(new FolderTableLabelProvider(1));
+
+		TableColumn tc2 = new TableColumn(table, SWT.RIGHT);
+		tc2.setText("Items");
+		tableColumnLayout.setColumnData(tc2, new ColumnPixelData(10));
+		tc2.setResizable(true);
+		TableViewerColumn tbvColumn2 = new TableViewerColumn(this.tbvFolders, tc2);
+		tbvColumn2.setLabelProvider(new FolderTableLabelProvider(2));
+
+		TableColumn tc3 = new TableColumn(table, SWT.LEFT);
+		tc3.setText("Folder");
+		tableColumnLayout.setColumnData(tc3, new ColumnWeightData(10));
+		tc3.setResizable(true);
+		TableViewerColumn tbvColumn3 = new TableViewerColumn(this.tbvFolders, tc3);
+		tbvColumn3.setLabelProvider(new FolderTableLabelProvider(3));
+
 		autoSizeViewerColumns(this.tbvFolders, this.tabItemFolders);
-
 		addOpenFolderActionContextMenu(this.tbvFolders);
 
 		return composite;
@@ -792,9 +796,9 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	private Control createTabItemDuplicateFilesContent(Composite parent) {
 		Composite composite = new Composite(parent, SWT.NONE);
-		composite.setLayout(new GridLayout());
+		TableColumnLayout tableColumnLayout = new TableColumnLayout();
+		composite.setLayout(tableColumnLayout);
 		GridDataFactory.swtDefaults().grab(true, false).align(SWT.FILL, SWT.FILL).applyTo(composite);
-		GridLayoutFactory.swtDefaults().margins(0, 0).applyTo(composite);
 
 		this.tbvFiles = CheckboxTableViewer.newCheckList(composite, SWT.FULL_SELECTION);
 		GridDataFactory.swtDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).applyTo(this.tbvFiles.getTable());
@@ -818,29 +822,35 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			}
 		});
 
-		this.tbvFiles.setLabelProvider(new FileTableLabelProvider());
 		this.tbvFiles.setContentProvider(new ArrayContentProvider());
-		this.tbvFiles.setSorter(new FileTableViewerSorter());
+		this.tbvFiles.setComparator(new FileTableViewerComparator());
 		this.tbvFiles.setUseHashlookup(true);
 		this.tbvFiles.setInput(this.fileTableElements);
 
-		String[] columnNames = new String[] {
-				"", "Size", "Folder" };
-		int[] columnAlignments = new int[] {
-				SWT.LEFT, SWT.RIGHT, SWT.LEFT, };
-		int[] columnWidths = new int[] {
-				48, 100, 100 };
-		boolean[] isColumnResizable = new boolean[] {
-				false, true, true };
+		Table table = this.tbvFiles.getTable();
 
-		for (int col = 0; col < columnNames.length; col++) {
-			TableColumn tableColumn = new TableColumn(this.tbvFiles.getTable(), columnAlignments[col]);
-			tableColumn.setText(columnNames[col]);
-			tableColumn.setResizable(isColumnResizable[col]);
-			tableColumn.setWidth(columnWidths[col]);
-		}
+		TableColumn tc0 = new TableColumn(table, SWT.LEFT);
+		tc0.setText("");
+		tableColumnLayout.setColumnData(tc0, new ColumnPixelData(48));
+		tc0.setResizable(false);
+		TableViewerColumn tbvColumn0 = new TableViewerColumn(this.tbvFiles, tc0);
+		tbvColumn0.setLabelProvider(new FileTableLabelProvider(0));
+
+		TableColumn tc1 = new TableColumn(table, SWT.RIGHT);
+		tc1.setText("Size");
+		tableColumnLayout.setColumnData(tc1, new ColumnPixelData(100));
+		tc1.setResizable(true);
+		TableViewerColumn tbvColumn1 = new TableViewerColumn(this.tbvFiles, tc1);
+		tbvColumn1.setLabelProvider(new FileTableLabelProvider(1));
+
+		TableColumn tc2 = new TableColumn(table, SWT.LEFT);
+		tc2.setText("Folder");
+		tableColumnLayout.setColumnData(tc2, new ColumnWeightData(1));
+		tc2.setResizable(true);
+		TableViewerColumn tbvColumn2 = new TableViewerColumn(this.tbvFiles, tc2);
+		tbvColumn2.setLabelProvider(new FileTableLabelProvider(2));
+
 		autoSizeViewerColumns(this.tbvFiles, this.tabItemFiles);
-
 		addOpenFolderActionContextMenu(this.tbvFiles);
 
 		return composite;
@@ -1043,12 +1053,32 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	//////////////////////////////////////////////////////////////////////////////
 
-	private static class FolderTableLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider {
+	private static class FolderTableLabelProvider extends ColumnLabelProvider {
+		private int columnIndex;
+
+		public FolderTableLabelProvider(int columnIndex) {
+			this.columnIndex = columnIndex;
+		}
 
 		@Override
-		public Image getColumnImage(Object element, int index) {
+		public String getText(Object element) {
 			FolderTableElement fElement = (FolderTableElement) element;
-			if (index == 0) {
+			switch (this.columnIndex) {
+				case 1:
+					return Utils.formatMemorySize(fElement.getTotalSize());
+				case 2:
+					return Utils.formatCount(fElement.getTotalChildrenCount());
+				case 3:
+					return fElement.getPath();
+				default:
+					return "";
+			}
+		}
+
+		@Override
+		public Image getImage(Object element) {
+			FolderTableElement fElement = (FolderTableElement) element;
+			if (this.columnIndex == 0) {
 				if (fElement.isGrayed()) {
 					return fElement.isWarning() ? IMG_FOLDER_WARNING_DIS : IMG_FOLDER_DIS;
 				}
@@ -1058,30 +1088,13 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		}
 
 		@Override
-		public String getColumnText(Object element, int index) {
-			FolderTableElement fElement = (FolderTableElement) element;
-			switch (index) {
-				case 0:
-					return "";
-				case 1:
-					return Utils.formatMemorySize(fElement.getTotalSize());
-				case 2:
-					return Utils.formatCount(fElement.getTotalChildrenCount());
-				case 3:
-					return fElement.getPath();
-				default:
-					return null;
-			}
-		}
-
-		@Override
-		public Color getBackground(Object element, int index) {
+		public Color getBackground(Object element) {
 			FolderTableElement fElement = (FolderTableElement) element;
 			return ((fElement.getDuplicatesGroupIndex() % 2) == 0) ? COLOR_EVEN_LINE : COLOR_ODD_LINE;
 		}
 
 		@Override
-		public Color getForeground(Object element, int index) {
+		public Color getForeground(Object element) {
 			FolderTableElement fElement = (FolderTableElement) element;
 			return fElement.isGrayed() ? COLOR_GREY : COLOR_BLACK;
 		}
@@ -1089,7 +1102,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	//////////////////////////////////////////////////////////////////////////////
 
-	private static class FolderTableViewerSorter extends ViewerSorter {
+	private static class FolderTableViewerComparator extends ViewerComparator {
 		@Override
 		public int compare(Viewer viewer, Object o1, Object o2) {
 			FolderTableElement fElement1 = (FolderTableElement) o1;
@@ -1187,11 +1200,30 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	//////////////////////////////////////////////////////////////////////////////
 
-	private static class FileTableLabelProvider extends LabelProvider implements ITableLabelProvider, ITableColorProvider {
+	private static class FileTableLabelProvider extends ColumnLabelProvider {
+		private int columnIndex;
+
+		public FileTableLabelProvider(int columnIndex) {
+			this.columnIndex = columnIndex;
+		}
+
 		@Override
-		public Image getColumnImage(Object element, int index) {
+		public String getText(Object element) {
 			FileTableElement fElement = (FileTableElement) element;
-			if (index == 0) {
+			switch (this.columnIndex) {
+				case 1:
+					return Utils.formatMemorySize(fElement.getSize());
+				case 2:
+					return fElement.getPath();
+				default:
+					return "";
+			}
+		}
+
+		@Override
+		public Image getImage(Object element) {
+			FileTableElement fElement = (FileTableElement) element;
+			if (this.columnIndex == 0) {
 				if (fElement.isGrayed()) {
 					return fElement.isWarning() ? IMG_FILE_WARNING_DIS : IMG_FILE_DIS;
 				}
@@ -1201,28 +1233,13 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		}
 
 		@Override
-		public String getColumnText(Object element, int index) {
-			FileTableElement fElement = (FileTableElement) element;
-			switch (index) {
-				case 0:
-					return "";
-				case 1:
-					return Utils.formatMemorySize(fElement.getSize());
-				case 2:
-					return fElement.getPath();
-				default:
-					return null;
-			}
-		}
-
-		@Override
-		public Color getBackground(Object element, int index) {
+		public Color getBackground(Object element) {
 			FileTableElement fElement = (FileTableElement) element;
 			return ((fElement.getDuplicatesGroupIndex() % 2) == 0) ? COLOR_EVEN_LINE : COLOR_ODD_LINE;
 		}
 
 		@Override
-		public Color getForeground(Object element, int index) {
+		public Color getForeground(Object element) {
 			FileTableElement fElement = (FileTableElement) element;
 			return fElement.isGrayed() ? COLOR_GREY : COLOR_BLACK;
 		}
@@ -1230,7 +1247,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 
 	//////////////////////////////////////////////////////////////////////////////
 
-	private static class FileTableViewerSorter extends ViewerSorter {
+	private static class FileTableViewerComparator extends ViewerComparator {
 		@Override
 		public int compare(Viewer viewer, Object o1, Object o2) {
 			FileTableElement fElement1 = (FileTableElement) o1;
