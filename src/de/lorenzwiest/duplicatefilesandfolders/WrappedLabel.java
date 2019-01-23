@@ -26,7 +26,6 @@ package de.lorenzwiest.duplicatefilesandfolders;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
@@ -39,9 +38,8 @@ public class WrappedLabel {
 		INFO
 	}
 
-	final private static Class<WrappedLabel> CLAZZ = WrappedLabel.class;
-	final private static Image IMG_WARNING = ImageDescriptor.createFromFile(CLAZZ, "icons/warning.png").createImage();
-	final private static Image IMG_INFO = ImageDescriptor.createFromFile(CLAZZ, "icons/info.png").createImage();
+	final private static Image IMG_WARNING = Utils.readImage("icons/warning.png");
+	final private static Image IMG_INFO = Utils.readImage("icons/info.png");
 
 	private Composite composite;
 	private Label icon;

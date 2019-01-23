@@ -25,6 +25,7 @@
 package de.lorenzwiest.duplicatefilesandfolders;
 
 import java.io.File;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.security.MessageDigest;
@@ -37,8 +38,10 @@ import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.FontMetrics;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Display;
 
 import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.TableElement;
 
@@ -217,5 +220,11 @@ public class Utils {
 		} else {
 			return String.format("explorer /e,\"%s\"", file.getAbsolutePath());
 		}
+	}
+
+	public static Image readImage(String filepath) {
+		InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(filepath);
+		Image image = new Image(Display.getCurrent(), stream);
+		return image;
 	}
 }

@@ -45,7 +45,6 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.TableColumnLayout;
-import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.CheckStateChangedEvent;
 import org.eclipse.jface.viewers.CheckboxTableViewer;
@@ -100,17 +99,16 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	final private static Color COLOR_BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
 	final private static Color COLOR_GREY = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 
-	final private static Class<DuplicateFilesAndFolders> CLAZZ = DuplicateFilesAndFolders.class;
-	final public static Image IMG_ICON = ImageDescriptor.createFromFile(CLAZZ, "icons/icon.png").createImage();
-	final private static Image IMG_FOLDER = ImageDescriptor.createFromFile(CLAZZ, "icons/folder.png").createImage();
-	final private static Image IMG_FOLDER_WARNING = ImageDescriptor.createFromFile(CLAZZ, "icons/folder.warning.png").createImage();
-	final private static Image IMG_FILE = ImageDescriptor.createFromFile(CLAZZ, "icons/file.png").createImage();
-	final private static Image IMG_FILE_WARNING = ImageDescriptor.createFromFile(CLAZZ, "icons/file.warning.png").createImage();
-	final private static Image IMG_FOLDER_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/folder_disabled.png").createImage();
-	final private static Image IMG_FOLDER_WARNING_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/folder.warning_disabled.png").createImage();
-	final private static Image IMG_FILE_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/file_disabled.png").createImage();
-	final private static Image IMG_FILE_WARNING_DIS = ImageDescriptor.createFromFile(CLAZZ, "icons/file.warning_disabled.png").createImage();
-	final private static Image IMG_MENU = ImageDescriptor.createFromFile(CLAZZ, "icons/menu.png").createImage();
+	final public static Image IMG_ICON = Utils.readImage("icons/icon.png");
+	final private static Image IMG_FOLDER = Utils.readImage("icons/folder.png");
+	final private static Image IMG_FOLDER_WARNING = Utils.readImage("icons/folder.warning.png");
+	final private static Image IMG_FILE = Utils.readImage("icons/file.png");
+	final private static Image IMG_FILE_WARNING = Utils.readImage("icons/file.warning.png");
+	final private static Image IMG_FOLDER_DIS = Utils.readImage("icons/folder_disabled.png");
+	final private static Image IMG_FOLDER_WARNING_DIS = Utils.readImage("icons/folder.warning_disabled.png");
+	final private static Image IMG_FILE_DIS = Utils.readImage("icons/file_disabled.png");
+	final private static Image IMG_FILE_WARNING_DIS = Utils.readImage("icons/file.warning_disabled.png");
+	final private static Image IMG_MENU = Utils.readImage("icons/menu.png");
 
 	private MessageDigest messageDigest;
 	private Node rootNode;
