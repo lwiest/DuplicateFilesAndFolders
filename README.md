@@ -66,7 +66,6 @@ I have prepared a runnable JAR file for the Windows (64-bit) platform for you.
 	3. Remove any JARs with an error marker.
 	4. Click the _Add External JARs..._ button and add the following libraries from your Eclipse IDE's plugins folder (`XXX` is a placeholder for a version string):
 		* `org.eclipse.core.commands_XXX.jar`
-		* `org.eclipse.core.runtime_XXX.jar`
 		* `org.eclipse.equinox.common_XXX.jar`
 		* `org.eclipse.jface_XXX.jar`
 		* `org.eclipse.swt.win32.win32.x86_64_XXX.jar`
