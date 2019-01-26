@@ -30,7 +30,7 @@ I have prepared a runnable JAR file for the Windows (64-bit) platform for you.
 2. Double-click this file to run DuplicateFilesAndFolders.
 
 ## Usage
-<img src="etc/image1.png" width="660"/>
+<img src="pics/image1.png" width="660"/>
 
 1. Enter or choose a folder to scan.
 2. Click _Find Duplicates_ to scan the folder.
@@ -43,7 +43,7 @@ I have prepared a runnable JAR file for the Windows (64-bit) platform for you.
 9. (Optional) Open a folder (or the containing folder of a file) with the context menu.
 10. Open the _Confirm Deleting Items_ dialog.
 
-<img src="etc/image2.png" width="660"/>
+<img src="pics/image2.png" width="660"/>
 
 1. Confirm to delete the selected items.
 2. Delete the selected items.
