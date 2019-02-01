@@ -60,29 +60,17 @@ I have prepared a runnable JAR file for the Windows (64-bit) platform for you.
 1. Download the ZIP file of this project from GitHub.
 2. Unzip it to a temporary folder ("temp folder").
 3. Import the `DuplicateFilesAndFolders` project from the temp folder to your Eclipse IDE as an import source _General > Existing Projects into Workspace_.
-4. Add the required Eclipse libraries:
-	1. In the _Project Explorer_ view, right-click on the _DuplicateFilesAndFolders_ project and select _Build Path > Configure Build Path..._
-	2. Click tab _Libraries_.
-	3. Remove any JARs with an error marker.
-	4. Click the _Add External JARs..._ button and add the following libraries from your Eclipse IDE's plugins folder (`XXX` is a placeholder for a version string):
-		* `org.eclipse.core.commands_XXX.jar`
-		* `org.eclipse.equinox.common_XXX.jar`
-		* `org.eclipse.jface_XXX.jar`
-		* `org.eclipse.swt.win32.win32.x86_64_XXX.jar`
-		* `org.eclipse.swt_XXX.jar`
-	5. Close the dialog with _OK_.
-	6. There should be no more error markers in the _Project Explorer_ view.
-5. In the _Project Explorer_ view, right-click _DuplicateFilesAndFolders_ and select _Run As > Java Application_.
-6. The DuplicateFilesAndFolders application starts. Close it.
-7. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
-8. Select _Java > Runnable JAR file_.
-9. Click _Next >_.
-10. Under _Launch Configuration_, select _Duplicate FilesAndFolders - Duplicate FilesAndFolders_.
-11. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
-12. Select the radio button _Package required libraries into generated JAR_.
-13. Click _Finish_.
-14. Use a file explorer to find the exported JAR file.
-15. To run the exported JAR file, double-click it.
+4. In the _Project Explorer_ view, right-click _DuplicateFilesAndFolders_ and select _Run As > Java Application_.
+5. The DuplicateFilesAndFolders application starts. Close it.
+6. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
+7. Select _Java > Runnable JAR file_.
+8. Click _Next >_.
+9. Under _Launch Configuration_, select _DuplicateFilesAndFolders - DuplicateFilesAndFolders_.
+10. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
+11. Select the radio button _Package required libraries into generated JAR_.
+12. Click _Finish_.
+13. Use a file explorer to find the exported JAR file.
+14. To run the exported JAR file, double-click it.
 
 ## Porting Tips
 
