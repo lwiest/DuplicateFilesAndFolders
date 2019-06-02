@@ -62,8 +62,8 @@ I have prepared for you a [release](https://github.com/lwiest/DuplicateFilesAndF
 
 **Prerequisites:**
 * You are running a Windows (64-bit) system.
-* You have a Java SDK installed on your system (I used Java SDK 8 (64-bit)).
-* You have an Eclipse IDE installed on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
+* You have installed Java SDK 7 (or higher) (64-bit) on your system (I used Java SDK 8 (64-bit)).
+* You have installed an Eclipse IDE on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
 
 1. Download the ZIP file of this project from GitHub.
 2. Unzip it to a temporary folder ("temp folder").
@@ -77,7 +77,7 @@ I have prepared for you a [release](https://github.com/lwiest/DuplicateFilesAndF
 10. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
 11. Select the radio button _Package required libraries into generated JAR_.
 12. Click _Finish_.
-13. Use a file explorer to find the exported JAR file.
+13. Use a file explorer to find the exported JAR file `DuplicateFilesAndFolders.jar`.
 14. To run the exported JAR file, double-click it.
 
 ## Porting Tips
