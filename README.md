@@ -12,7 +12,7 @@ Enjoy -- Lorenz
 
 ## Table of Contents
 
-* [Quick Start](#quick-start)
+* [Getting Started](#getting-started)
 * [Usage](#usage)
 * [Build Instructions](#build-instructions)
 * [Porting Tips](#porting-tips)
