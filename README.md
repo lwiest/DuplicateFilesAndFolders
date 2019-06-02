@@ -2,7 +2,7 @@
 
 DuplicateFilesAndFolders is an open-source tool to find and (optionally) delete duplicate files and folders, written in Java.
 
-It identifies duplicate files and folders by calculating and comparing MD5 hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders offers an Eclipse SWT/JFace-based graphical user interface.
+It identifies duplicate files and folders by calculating and comparing file hashes (something that Git does, too). For easy operation, DuplicateFilesAndFolders provides an Eclipse SWT/JFace-based graphical user interface.
 
 I developed DuplicateFilesAndFolders on Windows 7 (64-bit), but it should be easy to port it to other platforms.
 
@@ -17,17 +17,25 @@ Enjoy -- Lorenz
 * [Build Instructions](#build-instructions)
 * [Porting Tips](#porting-tips)
 
-## Quick Start
+## Getting Started
 
-I have prepared a runnable JAR file for the Windows (64-bit) platform for you.
+I have prepared for you a [release](https://github.com/lwiest/DuplicateFilesAndFolders/releases/latest) of DuplicateFilesAndFolders for Windows (64-bit).
 
-**Prerequisites:**
+### Prerequisites
 * You are running a Windows (64-bit) system.
-* You have a Java SDK 7 (or higher) (64-bit) installed on your system.
+* You have installed a Java SDK 7 (or higher) (64-bit) on your system.
 
-1. Download this project's ZIP file from GitHub.
-2. Extract the file `DuplicateFilesAndFolders.jar` from the ZIP file.
-2. Double-click this file to run DuplicateFilesAndFolders.
+### Instructions
+**Option 1**
+1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
+2. Open a command prompt in that folder and enter:
+   ```
+   java -jar DuplicateFilesAndFolders.jar
+   ```
+
+**Option 2**
+1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to the desktop.
+2. Double-click _DuplicateFilesAndFolders.jar_ on the desktop.
 
 ## Usage
 <img src="pics/image1.png" width="660"/>
