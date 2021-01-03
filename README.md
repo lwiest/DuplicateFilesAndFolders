@@ -24,15 +24,12 @@ Enjoy &mdash; Lorenz
 * You have installed Java SDK 7 (or higher) (64-bit) on your system.
 
 ### Instructions
-
 **Option 1**
 1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
 2. Open a command prompt in that folder and enter
-
    ```
    java -jar DuplicateFilesAndFolders.jar
    ```
-
 **Option 2**
 1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to the desktop.
 2. Double-click _DuplicateFilesAndFolders.jar_ on the desktop.
