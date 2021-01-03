@@ -6,9 +6,7 @@ It identifies duplicate files and folders by calculating and comparing file hash
 
 I developed DuplicateFilesAndFolders on Windows 7 (64-bit), but it should be easy to port it to other platforms.
 
-The DuplicateFilesAndFolders source code is available under the MIT license.
-
-Enjoy -- Lorenz
+Enjoy &mdash; Lorenz
 
 ## Table of Contents
 
@@ -16,19 +14,21 @@ Enjoy -- Lorenz
 * [Usage](#usage)
 * [Build Instructions](#build-instructions)
 * [Porting Tips](#porting-tips)
+* [License](#license)
 
 ## Getting Started
 
-I have prepared for you a [release](https://github.com/lwiest/DuplicateFilesAndFolders/releases/latest) of DuplicateFilesAndFolders for Windows (64-bit).
-
 ### Prerequisites
+
 * You are running a Windows (64-bit) system.
-* You have installed a Java SDK 7 (or higher) (64-bit) on your system.
+* You have installed Java SDK 7 (or higher) (64-bit) on your system.
 
 ### Instructions
+
 **Option 1**
 1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
-2. Open a command prompt in that folder and enter:
+2. Open a command prompt in that folder and enter
+
    ```
    java -jar DuplicateFilesAndFolders.jar
    ```
@@ -38,6 +38,7 @@ I have prepared for you a [release](https://github.com/lwiest/DuplicateFilesAndF
 2. Double-click _DuplicateFilesAndFolders.jar_ on the desktop.
 
 ## Usage
+
 <img src="pics/image1.png" width="660"/>
 
 1. Enter or choose a folder to scan.
@@ -60,14 +61,17 @@ I have prepared for you a [release](https://github.com/lwiest/DuplicateFilesAndF
 
 ## Build Instructions
 
-**Prerequisites:**
+### Prerequisites
+
 * You are running a Windows (64-bit) system.
 * You have installed Java SDK 7 (or higher) (64-bit) on your system (I used Java SDK 8 (64-bit)).
 * You have installed an Eclipse IDE on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
 
+### Instructions
+
 1. Download the ZIP file of this project from GitHub.
-2. Unzip it to a temporary folder ("temp folder").
-3. Import the `DuplicateFilesAndFolders` project from the temp folder to your Eclipse IDE as an import source _General > Existing Projects into Workspace_.
+2. Unzip it to a temporary folder.
+3. Import the `DuplicateFilesAndFolders` project from the temporary folder to your Eclipse IDE as an import source _General > Existing Projects into Workspace_.
 4. In the _Project Explorer_ view, right-click _DuplicateFilesAndFolders_ and select _Run As > Java Application_.
 5. The DuplicateFilesAndFolders application starts. Close it.
 6. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
@@ -87,3 +91,7 @@ To port DuplicateFilesAndFolders to another platform, apply the following change
 1. Adjust in method `Utils.getInitialFolderToScanPath()` the string that is shown as the initial folder path.
 2. Adjust in method `Utils.getExplorerCommandLine()` the command-line string that launches the file explorer, opening a specific folder.
 3. Replace the SWT library `org.eclipse.swt.win32.win32.x86_64_XXX.jar` with the SWT library specific to your platform (Tip: The library name follows the pattern `org.eclipse.swt.<platform>_<version>.v<timestamp>.jar`.).
+
+## License
+
+This project is available under the MIT license.
