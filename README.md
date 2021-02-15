@@ -45,7 +45,7 @@ Enjoy &mdash; Lorenz
 5. Duplicate items are grouped by background color.
 6. Select a duplicate item for deletion.
 7. Child items of selected items are automatically selected and dimmed.
-8. (Optional) Select all items, select all but one item of each duplicate item, or deselect all items for deletion.
+8. (Optional) Select all items, select all but one item of each duplicate item, deselect all items for deletion, or invert your selection.
 9. (Optional) Open a folder (or the containing folder of a file) with the context menu.
 10. Open the _Confirm Deleting Items_ dialog.
 

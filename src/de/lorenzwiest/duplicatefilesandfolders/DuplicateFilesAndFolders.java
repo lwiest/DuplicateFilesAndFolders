@@ -131,6 +131,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	private MenuItem itemSelectAll;
 	private MenuItem itemSelectAllButOneOfEachDuplicate;
 	private MenuItem itemDeselectAll;
+	private MenuItem itemInvertSelection;
 
 	public DuplicateFilesAndFolders() {
 		super(null);
@@ -145,7 +146,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 	@Override
 	protected void configureShell(Shell shell) {
 		super.configureShell(shell);
-		shell.setText("Duplicate Files & Folders 1.2");
+		shell.setText("Duplicate Files & Folders 1.3");
 		shell.setImage(IMG_ICON);
 	}
 
@@ -511,6 +512,16 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 			}
 		});
 
+		this.itemInvertSelection = new MenuItem(menu, SWT.PUSH);
+		this.itemInvertSelection.setText("Invert Selection");
+		this.itemInvertSelection.setEnabled(false);
+		this.itemInvertSelection.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				itemInvertSelectionSelected();
+			}
+		});
+
 		toolItem.setImage(IMG_MENU);
 		toolItem.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -607,6 +618,28 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		});
 	}
 
+	private void itemInvertSelectionSelected() {
+		final CTabItem selectedTab = this.tabFolder.getSelection();
+		final CTabItem tabItemFolders = this.tabItemFolders;
+		final CheckboxTableViewer tbv = (selectedTab == this.tabItemFolders) ? this.tbvFolders : this.tbvFiles;
+
+		BusyIndicator.showWhile(Display.getDefault(), new Runnable() {
+			@Override
+			public void run() {
+				for (TableItem tableItem : tbv.getTable().getItems()) { // tableItem(s) are in visual sort order
+					TableElement tableElement = (TableElement) tableItem.getData();
+					boolean isChecked = tableElement.isChecked();
+					CheckStateChangedEvent event = new CheckStateChangedEvent(tbv, tableElement, !isChecked);
+					if (selectedTab == tabItemFolders) {
+						tbvFoldersCheckStateChanged(event);
+					} else {
+						tbvFilesCheckStateChanged(event);
+					}
+				}
+			}
+		});
+	}
+
 	private void updatePopUpMenu() {
 		CTabItem selectedTab = this.tabFolder.getSelection();
 		TableElement[] tableElements = (selectedTab == this.tabItemFolders) ? this.folderTableElements : this.fileTableElements;
@@ -614,6 +647,7 @@ public class DuplicateFilesAndFolders extends ApplicationWindow {
 		this.itemSelectAll.setEnabled(isEnabled);
 		this.itemSelectAllButOneOfEachDuplicate.setEnabled(isEnabled);
 		this.itemDeselectAll.setEnabled(isEnabled);
+		this.itemInvertSelection.setEnabled(isEnabled);
 	}
 
 	private Control createTabItemDuplicateFoldersContent(Composite parent) {
