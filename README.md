@@ -65,7 +65,7 @@ Enjoy &mdash; Lorenz
 
 * You are running a Windows (64-bit) system.
 * You have installed Java SDK 7 (64-bit) or higher  on your system (I used Java SDK 8 (64-bit)).
-* You have installed an Eclipse IDE on your system (I used Eclipse 4.5.0 "Mars" (64-bit)).
+* You have installed an Eclipse IDE on your system (I used Eclipse 4.5.0 &ldquo;Mars&rdquo; (64-bit)).
 
 ### Instructions
 
