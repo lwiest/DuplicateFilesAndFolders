@@ -57,7 +57,7 @@ Enjoy &mdash; Lorenz
 2. Delete the selected items.
 
 > [!CAUTION]
-> Like with all software able to delete files, you are using _DuplicateFilesAndFolders_ at your own risk.
+> **Like with all software able to delete files, you are using _DuplicateFilesAndFolders_ at your own risk.**
 
 ## Build Instructions
 
