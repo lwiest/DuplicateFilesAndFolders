@@ -44,10 +44,10 @@ Enjoy &mdash; Lorenz
 6. Select a duplicate item for deletion.
 7. Child items of selected items are automatically selected and dimmed.
 8. (Optional) Choose one of the following:
- * Select all items.
- * Select all but one item of each duplicate item.
- * Deselect all items for deletion.
- * Invert your selection.
+   * Select all items.
+   * Select all but one item of each duplicate item.
+   * Deselect all items for deletion.
+   * Invert your selection.
 9. (Optional) Open a folder (or the containing folder of a file) with the context menu.
 10. Open the _Confirm Deleting Items_ dialog.
 
