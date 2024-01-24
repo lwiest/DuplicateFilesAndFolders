@@ -24,7 +24,7 @@ Enjoy &mdash; Lorenz
 * You have installed Java JDK (or SDK) 7 (64-bit) or higher on your system.
 
 ### Instructions
-1. Download [DuplicateFilesAndFolders.jar] (https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
+1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
 2. Open a command prompt in that folder and enter
 
    ```
