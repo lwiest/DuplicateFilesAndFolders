@@ -24,7 +24,7 @@ Enjoy &mdash; Lorenz
 * You have installed Java JDK (or SDK) 7 (64-bit) or higher on your system.
 
 ### Instructions
-1. Download [DuplicateFilesAndFolders.jar](https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
+1. Download [DuplicateFilesAndFolders.jar] https://github.com/lwiest/DuplicateFilesAndFolders/releases/download/v2.0/DuplicateFilesAndFolders.jar) to a folder.
 2. Open a command prompt in that folder and enter
 
    ```
@@ -73,15 +73,17 @@ Enjoy &mdash; Lorenz
 2. Unzip it to a temporary folder.
 3. Import the `DuplicateFilesAndFolders` project from the temporary folder into your Eclipse IDE as an import source _General > Existing Projects into Workspace_.
 4. In the _Project Explorer_ view, right-click _DuplicateFilesAndFolders_ and select _Run As > Java Application_.
-5. The _DuplicateFilesAndFolders_ application starts. Close it.
-6. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
-7. Select _Java > Runnable JAR file_.
-8. Click _Next >_.
-9. Under _Launch Configuration_, select _DuplicateFilesAndFolders - DuplicateFilesAndFolders_.
-10. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
-11. Select the radio button _Package required libraries into generated JAR_.
-12. Click _Finish_.
-13. Use a file explorer to find the exported JAR file `DuplicateFilesAndFolders.jar`.
+5. The _DuplicateFilesAndFolders_ application starts.
+6. If you like to create a `DuplicateFilesAndFolders.jar` JAR file, continue:
+7. Close the _DuplicateFilesAndFolders_ application.
+8. In the _Project Explorer_ view, right-click _DuplicateFileAndFolders_ and select _Export..._.
+9. Select _Java > Runnable JAR file_.
+10. Click _Next >_.
+11. Under _Launch Configuration_, select _DuplicateFilesAndFolders - DuplicateFilesAndFolders_.
+12. Under _Export destination_, enter the full pathname of the exported application, for example `C:\TEMP\DuplicateFilesAndFolders.jar`.
+13. Select the radio button _Package required libraries into generated JAR_.
+14. Click _Finish_.
+15. Use a file explorer to find the exported JAR file `DuplicateFilesAndFolders.jar`.
 
 ## Porting Tips
 
