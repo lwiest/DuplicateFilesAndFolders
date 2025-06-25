@@ -31,7 +31,7 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Shell;
 
 public class AppDialog extends Dialog {
-	private final Point INITIAL_SIZE = new Point(SWT.DEFAULT, SWT.DEFAULT);
+	private static final Point INITIAL_SIZE = new Point(SWT.DEFAULT, SWT.DEFAULT);
 
 	protected AppDialog(Shell parentShell) {
 		super(parentShell);

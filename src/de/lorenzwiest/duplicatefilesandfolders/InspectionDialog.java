@@ -60,8 +60,8 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
 public class InspectionDialog extends AppDialog {
-	final private static int INDENT = DuplicateFilesAndFolders.INDENT;
-	final private static int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
+	private static final int INDENT = DuplicateFilesAndFolders.INDENT;
+	private static final int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
 
 	private int numItems;
 	private Node rootNode;

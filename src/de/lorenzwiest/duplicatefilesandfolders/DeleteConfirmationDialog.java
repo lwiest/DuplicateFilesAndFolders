@@ -50,9 +50,9 @@ import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FileTabl
 import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.FolderTableElement;
 
 public class DeleteConfirmationDialog extends AppDialog {
-	private final static int INDENT = DuplicateFilesAndFolders.INDENT;
-	private final static int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
-	private final static String CR = System.getProperty("line.separator");
+	private static final int INDENT = DuplicateFilesAndFolders.INDENT;
+	private static final int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
+	private static final String CR = System.getProperty("line.separator");
 
 	private Node rootNode;
 	private FolderTableElement[] folderTableElements;

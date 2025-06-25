@@ -46,8 +46,8 @@ import org.eclipse.swt.widgets.Display;
 import de.lorenzwiest.duplicatefilesandfolders.DuplicateFilesAndFolders.TableElement;
 
 public class Utils {
-	final private static int MINUTE = 60;
-	final private static int HOUR = 60 * 60;
+	private static final int MINUTE = 60;
+	private static final int HOUR = 60 * 60;
 
 	public static String formatTime(int millis) {
 		int seconds = millis / 1000;
@@ -109,13 +109,13 @@ public class Utils {
 		return sb.toString();
 	}
 
-	final private static long KB = 1024L;
-	final private static long MB = 1024L * 1024;
-	final private static long GB = 1024L * 1024 * 1024;
-	final private static long TB = 1024L * 1024 * 1024 * 1024;
+	private static final long KB = 1024L;
+	private static final long MB = 1024L * 1024;
+	private static final long GB = 1024L * 1024 * 1024;
+	private static final long TB = 1024L * 1024 * 1024 * 1024;
 
-	final private static DecimalFormat DECIMAL_FORMAT1 = new DecimalFormat(".0", DecimalFormatSymbols.getInstance(Locale.US));
-	final private static DecimalFormat DECIMAL_FORMAT2 = new DecimalFormat(".00", DecimalFormatSymbols.getInstance(Locale.US));
+	private static final DecimalFormat DECIMAL_FORMAT1 = new DecimalFormat(".0", DecimalFormatSymbols.getInstance(Locale.US));
+	private static final DecimalFormat DECIMAL_FORMAT2 = new DecimalFormat(".00", DecimalFormatSymbols.getInstance(Locale.US));
 
 	public static String formatMemorySize(long size) {
 		DECIMAL_FORMAT1.setRoundingMode(RoundingMode.DOWN);
@@ -142,13 +142,13 @@ public class Utils {
 		}
 	}
 
-	final private static DecimalFormat COUNT_FORMAT = new DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US));
+	private static final DecimalFormat COUNT_FORMAT = new DecimalFormat("#,###", DecimalFormatSymbols.getInstance(Locale.US));
 
 	public static String formatCount(long count) {
 		return String.format("%s", COUNT_FORMAT.format(count));
 	}
 
-	final private static DecimalFormat PERCENTAGE_FORMAT = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.US));
+	private static final DecimalFormat PERCENTAGE_FORMAT = new DecimalFormat("#0.0", DecimalFormatSymbols.getInstance(Locale.US));
 
 	public static String formatPercentage(float percentage) {
 		return String.format("%s", PERCENTAGE_FORMAT.format(percentage));

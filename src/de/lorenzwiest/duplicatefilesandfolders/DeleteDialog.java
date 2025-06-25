@@ -42,8 +42,8 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Shell;
 
 public class DeleteDialog extends AppDialog {
-	private final static int INDENT = DuplicateFilesAndFolders.INDENT;
-	private final static int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
+	private static final int INDENT = DuplicateFilesAndFolders.INDENT;
+	private static final int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
 
 	private LinkedHashSet<Node> itemsToDelete; // items in delete-depth-first order
 	private DeleteRunnable deleteRunnable;

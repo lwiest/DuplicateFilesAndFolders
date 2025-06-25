@@ -38,8 +38,8 @@ public class WrappedLabel {
 		INFO
 	}
 
-	final private static Image IMG_WARNING = Utils.readImage("icons/warning.png");
-	final private static Image IMG_INFO = Utils.readImage("icons/info.png");
+	private static final Image IMG_WARNING = Utils.readImage("icons/warning.png");
+	private static final Image IMG_INFO = Utils.readImage("icons/info.png");
 
 	private Composite composite;
 	private Label icon;

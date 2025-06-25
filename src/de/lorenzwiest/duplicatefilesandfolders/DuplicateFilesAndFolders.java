@@ -91,24 +91,24 @@ import org.eclipse.swt.widgets.ToolItem;
 import de.lorenzwiest.duplicatefilesandfolders.WrappedLabel.Type;
 
 public class DuplicateFilesAndFolders extends ApplicationWindow {
-	final public static int INDENT = 5;
-	final private static int INDENT2 = INDENT * 2;
+	public static final int INDENT = 5;
+	private static final int INDENT2 = INDENT * 2;
 
-	final private static Color COLOR_EVEN_LINE = new Color(Display.getCurrent(), 240, 240, 255);
-	final private static Color COLOR_ODD_LINE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
-	final private static Color COLOR_BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
-	final private static Color COLOR_GREY = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
+	private static final Color COLOR_EVEN_LINE = new Color(Display.getCurrent(), 240, 240, 255);
+	private static final Color COLOR_ODD_LINE = Display.getDefault().getSystemColor(SWT.COLOR_WHITE);
+	private static final Color COLOR_BLACK = Display.getDefault().getSystemColor(SWT.COLOR_BLACK);
+	private static final Color COLOR_GREY = Display.getDefault().getSystemColor(SWT.COLOR_GRAY);
 
-	final public static Image IMG_ICON = Utils.readImage("icons/icon.png");
-	final private static Image IMG_FOLDER = Utils.readImage("icons/folder.png");
-	final private static Image IMG_FOLDER_WARNING = Utils.readImage("icons/folder.warning.png");
-	final private static Image IMG_FILE = Utils.readImage("icons/file.png");
-	final private static Image IMG_FILE_WARNING = Utils.readImage("icons/file.warning.png");
-	final private static Image IMG_FOLDER_DIS = Utils.readImage("icons/folder_disabled.png");
-	final private static Image IMG_FOLDER_WARNING_DIS = Utils.readImage("icons/folder.warning_disabled.png");
-	final private static Image IMG_FILE_DIS = Utils.readImage("icons/file_disabled.png");
-	final private static Image IMG_FILE_WARNING_DIS = Utils.readImage("icons/file.warning_disabled.png");
-	final private static Image IMG_MENU = Utils.readImage("icons/menu.png");
+	public static final Image IMG_ICON = Utils.readImage("icons/icon.png");
+	private static final Image IMG_FOLDER = Utils.readImage("icons/folder.png");
+	private static final Image IMG_FOLDER_WARNING = Utils.readImage("icons/folder.warning.png");
+	private static final Image IMG_FILE = Utils.readImage("icons/file.png");
+	private static final Image IMG_FILE_WARNING = Utils.readImage("icons/file.warning.png");
+	private static final Image IMG_FOLDER_DIS = Utils.readImage("icons/folder_disabled.png");
+	private static final Image IMG_FOLDER_WARNING_DIS = Utils.readImage("icons/folder.warning_disabled.png");
+	private static final Image IMG_FILE_DIS = Utils.readImage("icons/file_disabled.png");
+	private static final Image IMG_FILE_WARNING_DIS = Utils.readImage("icons/file.warning_disabled.png");
+	private static final Image IMG_MENU = Utils.readImage("icons/menu.png");
 
 	private MessageDigest messageDigest;
 	private Node rootNode;

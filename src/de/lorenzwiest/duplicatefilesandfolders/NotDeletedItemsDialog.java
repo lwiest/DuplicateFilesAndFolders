@@ -44,9 +44,9 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 
 public class NotDeletedItemsDialog extends AppDialog {
-	private final static int INDENT = DuplicateFilesAndFolders.INDENT;
-	private final static int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
-	private final static String CR = System.getProperty("line.separator");
+	private static final int INDENT = DuplicateFilesAndFolders.INDENT;
+	private static final int INDENT2 = DuplicateFilesAndFolders.INDENT * 2;
+	private static final String CR = System.getProperty("line.separator");
 
 	private LinkedHashSet<Node> itemsNotDeleted;
 

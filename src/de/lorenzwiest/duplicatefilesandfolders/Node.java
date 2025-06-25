@@ -30,7 +30,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Node {
-	final public static List<Node> EMPTY = Collections.emptyList();
+	public static final List<Node> EMPTY = Collections.emptyList();
 
 	private File file;
 	private List<Node> children;
